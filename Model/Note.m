@@ -1,15 +1,13 @@
 //
-//  ViewController.h
+//  Note.m
 //  HelloNote
 //
 //  Created by VicChan on 3/31/16.
 //  Copyright © 2016 VicChan. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "Note.h"
 
-@interface ViewController : UIViewController
-
+@implementation Note
 
 @end
-
