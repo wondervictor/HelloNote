@@ -10,4 +10,9 @@
 
 @interface Note : NSObject
 
+@property (nonatomic, assign) NSString *noteTitle;
+@property (nonatomic, assign) NSString *noteContent;
+@property (nonatomic, assign) NSString *noteDate;
+@property (nonatomic, assign) NSString *bookName;   // 笔记本名
+
 @end

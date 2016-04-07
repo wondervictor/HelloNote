@@ -7,6 +7,18 @@
 //
 
 #import "AppDelegate.h"
+#import "MainViewController.h"
+#import "NavigationController.h"
+#import "LoginViewController.h"
+
+#import "UserInfo.h"
+#import "NoteManager.h"
+
+
+#import <BmobSDK/Bmob.h>
+
+#define DEFAULT_COLOR   [UIColor colorWithRed:50/255.0 green:205/255.0 blue:50/255.0 alpha:0.98]
+
 
 @interface AppDelegate ()
 
@@ -16,6 +28,37 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    [Bmob registerWithAppKey:@"d27154bf933451e31490cea0fbafd99e"];
+    _window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+    
+    [[UINavigationBar appearance]setBarTintColor:DEFAULT_COLOR];
+    [[UINavigationBar appearance]setTintColor:[UIColor whiteColor]];
+    
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *logined = [userDefaults objectForKey:@"username"];
+    //检查用户登录状态
+    
+    // 是否需要登录。
+    if (logined == nil) {
+        LoginViewController *login = [[LoginViewController alloc]init];
+        _window.rootViewController = login;
+    }
+    else {
+        UserInfo *userInfo = [UserInfo sharedManager];
+        
+        NSString *pwd = [userDefaults objectForKey:@"pwd"];
+        [userInfo setInfoWithName:logined password:pwd];
+        NSLog(@"%@",logined);
+        NoteManager *noteManager = [NoteManager sharedManager];
+        [noteManager getCurrentUserInfo:userInfo];
+        MainViewController *mainViewController = [[MainViewController alloc]init];
+        NavigationController *nv = [[NavigationController alloc]initWithRootViewController:mainViewController];
+        _window.rootViewController = nv;
+    }
+    [_window makeKeyAndVisible];
     // Override point for customization after application launch.
     return YES;
 }

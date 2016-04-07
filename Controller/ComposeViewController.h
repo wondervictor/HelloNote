@@ -8,6 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class Note;
+
+
 @interface ComposeViewController : UIViewController
+
+@property (nonatomic, strong) UITextView *noteContent;
+
+@property (nonatomic, strong) UITextField *noteTitle;
+
+
+- (void)showCurrentNote:(Note *)currentNote;
+
 
 @end

@@ -10,4 +10,10 @@
 
 @interface BookViewController : UIViewController
 
+@property (nonatomic, strong) UITableView *tableView;
+
+@property (nonatomic, strong) NSMutableArray *bookList;
+
+- (void)setBookListWithArray:(NSArray *)array;
+
 @end

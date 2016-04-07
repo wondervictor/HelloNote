@@ -9,14 +9,17 @@
 #define VIEW_WIDTH   self.frame.size.width
 #define VIEW_HEIGHT  self.frame.size.height
 
+#import "UserInfo.h"
 #import "SignView.h"
 
-@interface SignView()
+@interface SignView()<UserInfoDelegate>
 
 @property (nonatomic, strong) UITextField *nameField;
 @property (nonatomic, strong) UITextField *pwdField;
 @property (nonatomic, strong) UITextField *pwdFieldAgain;
 @property (nonatomic, strong) UITapGestureRecognizer *recognizer;
+@property (nonatomic, assign) CGPoint centerPoint;
+
 @end
 
 @implementation SignView
@@ -27,6 +30,9 @@
         self.center = center;
         self.layer.cornerRadius = 20;
         self.recognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(shutKeyBoard:)];
+        self.centerPoint = center;
+        self.autoresizesSubviews = YES;
+        self.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
         self.recognizer.numberOfTapsRequired = 1;
         self.recognizer.numberOfTouchesRequired = 1;
         [self addGestureRecognizer:self.recognizer];
@@ -85,16 +91,29 @@
     [self addSubview:self.pwdFieldAgain];
 
     
-    UIButton *confirmButton = [[UIButton alloc]initWithFrame:CGRectMake(30,210 , VIEW_WIDTH-60, 40)];
+    UIButton *confirmButton = [[UIButton alloc]initWithFrame:CGRectMake(30,210 , 100, 40)];
+    confirmButton.center = CGPointMake(VIEW_WIDTH/2.0 + 60, 230);
     confirmButton.layer.cornerRadius = 15;
     [confirmButton setTitle:@"注册" forState:UIControlStateNormal];
     confirmButton.backgroundColor = [UIColor orangeColor];
     [confirmButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [confirmButton addTarget:self action:@selector(signup:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:confirmButton];
-    
+
+    UIButton *cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(30,210 , 100, 40)];
+    cancelButton.center = CGPointMake(VIEW_WIDTH/2.0 - 60, 230);
+    cancelButton.layer.cornerRadius = 15;
+    [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
+    cancelButton.backgroundColor = [UIColor orangeColor];
+    [cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [cancelButton addTarget:self action:@selector(cancelButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:cancelButton];
 }
 
+- (void)cancelButtonPressed:(UIButton *)sender {
+    [self shutKeyBoard:nil];
+    [self viewDisappear];
+}
 
 - (void)shutKeyBoard:(UITapGestureRecognizer *)recognizer {
     [self.nameField resignFirstResponder];
@@ -118,8 +137,28 @@
         return;
     }
     
-    NSDictionary *dict = [[NSDictionary alloc]initWithObjects:@[name,pwd_1] forKeys:@[@"name",@"pwd"]];
-    [_delegate finishSignUpWithData:dict];
+    UserInfo *user = [UserInfo sharedManager];
+    user.delegate = self;
+    [user checkSameUser:name];
+
+}
+
+
+- (void)checkSameUserResult:(BOOL)isExist {
+    if (isExist) {
+        UILabel *label = [self viewWithTag:1001];
+        label.text = @"该用户名已被注册";
+        label.textColor = [UIColor redColor];
+        return;
+    } else if (isExist == NO) {
+        UserInfo *user = [UserInfo sharedManager];
+        NSString *name = self.nameField.text;
+        NSString *pwd_1 = self.pwdField.text;
+        [user createNewWithName:name password:pwd_1];
+        NSDictionary *dict = [[NSDictionary alloc]initWithObjects:@[name,pwd_1] forKeys:@[@"name",@"pwd"]];
+        [_delegate finishSignUpWithData:dict];
+        [self viewDisappear];
+    }
 }
 
 - (void)viewAppear {
@@ -127,7 +166,7 @@
 }
 
 - (void)viewDisappear {
-    
+    [self removeFromSuperview];
 }
 
 /*

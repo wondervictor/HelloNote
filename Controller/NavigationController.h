@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Menu.h"
+
+
 
 @interface NavigationController : UINavigationController
+
+@property (nonatomic, strong) Menu *menu;
+
+@property (nonatomic, strong) UIView *transitionView;
 
 @end

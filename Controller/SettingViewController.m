@@ -8,6 +8,9 @@
 
 #import "SettingViewController.h"
 
+
+#define DEFAULT_COLOR   [UIColor colorWithRed:50/255.0 green:205/255.0 blue:50/255.0 alpha:0.98]
+
 @interface SettingViewController ()
 
 @end
@@ -16,6 +19,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"设置";
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = DEFAULT_COLOR;
+
+
     // Do any additional setup after loading the view.
 }
 

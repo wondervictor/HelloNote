@@ -23,7 +23,7 @@
     if (self = [super initWithFrame:CGRectMake(0, 0, width, MAIN_HEIGHT)]) {
         self.titles = titleArray;
         self.images = imageArray;
-        self.layer.backgroundColor = [UIColor orangeColor].CGColor;
+        self.layer.backgroundColor = backColor.CGColor;//= [UIColor orangeColor].CGColor;
         [self configureMainTitle:title withWidth:width];
         self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(10,90 , width-20,MAIN_HEIGHT - 80 ) style:UITableViewStylePlain];
         self.tableView.delegate = self;
@@ -79,6 +79,8 @@
     //cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.selectedBackgroundView = [[UIView alloc]initWithFrame:cell.bounds];
     cell.selectedBackgroundView.layer.cornerRadius = 30.0f;
+    cell.autoresizesSubviews = YES;
+    cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
     cell.selectedBackgroundView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.3];
     cell.imageView.image = [UIImage imageNamed:[self.images objectAtIndex:row]];
     cell.textLabel.text = [self.titles objectAtIndex:row];

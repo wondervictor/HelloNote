@@ -9,12 +9,32 @@
 /* Begin PBXBuildFile section */
 		2E19EF2F1CACFC4000EFA996 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF2E1CACFC4000EFA996 /* main.m */; };
 		2E19EF321CACFC4000EFA996 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF311CACFC4000EFA996 /* AppDelegate.m */; };
-		2E19EF351CACFC4000EFA996 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF341CACFC4000EFA996 /* ViewController.m */; };
-		2E19EF381CACFC4000EFA996 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E19EF361CACFC4000EFA996 /* Main.storyboard */; };
 		2E19EF3A1CACFC4000EFA996 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E19EF391CACFC4000EFA996 /* Assets.xcassets */; };
 		2E19EF3D1CACFC4000EFA996 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E19EF3B1CACFC4000EFA996 /* LaunchScreen.storyboard */; };
 		2E19EF481CACFC4100EFA996 /* HelloNoteTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF471CACFC4100EFA996 /* HelloNoteTests.m */; };
 		2E19EF531CACFC4100EFA996 /* HelloNoteUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF521CACFC4100EFA996 /* HelloNoteUITests.m */; };
+		2E19EF681CACFCDE00EFA996 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF671CACFCDE00EFA996 /* MainViewController.m */; };
+		2E19EF761CACFDB300EFA996 /* Menu.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF731CACFDB300EFA996 /* Menu.m */; };
+		2E19EF771CACFDB300EFA996 /* SignView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF751CACFDB300EFA996 /* SignView.m */; };
+		2E19EF7A1CACFDC700EFA996 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF791CACFDC700EFA996 /* LoginViewController.m */; };
+		2E19EF7D1CACFEB000EFA996 /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF7C1CACFEB000EFA996 /* NavigationController.m */; };
+		2E19EF801CAD059400EFA996 /* CenterButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF7F1CAD059400EFA996 /* CenterButton.m */; };
+		2E19EF831CAD05AC00EFA996 /* NoteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF821CAD05AC00EFA996 /* NoteManager.m */; };
+		2E19EF861CAD05CB00EFA996 /* Note.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF851CAD05CB00EFA996 /* Note.m */; };
+		2E19EF891CAD3CE400EFA996 /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF881CAD3CE400EFA996 /* ComposeViewController.m */; };
+		2E9606B01CB3D44A00B3AA57 /* NoteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E9606AE1CB3D44A00B3AA57 /* NoteCell.m */; };
+		2E9606B11CB3D44A00B3AA57 /* NoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E9606AF1CB3D44A00B3AA57 /* NoteCell.xib */; };
+		2EBCEB301CAF821D00A6B24C /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF671CACFCDE00EFA996 /* MainViewController.m */; };
+		2EBCEB311CAF822B00A6B24C /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF671CACFCDE00EFA996 /* MainViewController.m */; };
+		2EBCEB321CAF85AA00A6B24C /* CenterButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF7F1CAD059400EFA996 /* CenterButton.m */; };
+		2EBCEB331CAF85AB00A6B24C /* CenterButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF7F1CAD059400EFA996 /* CenterButton.m */; };
+		2EBCEB361CAF8CCA00A6B24C /* BookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCEB351CAF8CCA00A6B24C /* BookViewController.m */; };
+		2EBCEB391CAF8D9100A6B24C /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCEB381CAF8D9100A6B24C /* SettingViewController.m */; };
+		2EBCEB3C1CAF8DA500A6B24C /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCEB3B1CAF8DA500A6B24C /* UserViewController.m */; };
+		2EBCEB3F1CAF8DB100A6B24C /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCEB3E1CAF8DB100A6B24C /* SearchViewController.m */; };
+		2EBCEB421CAF93A300A6B24C /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCEB411CAF93A300A6B24C /* UserInfo.m */; };
+		2EBCEB611CB395C400A6B24C /* TableMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCEB601CB395C400A6B24C /* TableMenu.m */; };
+		C55538856D20A50FDC70D6F2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BAC3B976E59687E6D40C52EC /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,9 +59,6 @@
 		2E19EF2E1CACFC4000EFA996 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2E19EF301CACFC4000EFA996 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2E19EF311CACFC4000EFA996 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		2E19EF331CACFC4000EFA996 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		2E19EF341CACFC4000EFA996 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		2E19EF371CACFC4000EFA996 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2E19EF391CACFC4000EFA996 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2E19EF3C1CACFC4000EFA996 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2E19EF3E1CACFC4000EFA996 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -51,6 +68,42 @@
 		2E19EF4E1CACFC4100EFA996 /* HelloNoteUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HelloNoteUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E19EF521CACFC4100EFA996 /* HelloNoteUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelloNoteUITests.m; sourceTree = "<group>"; };
 		2E19EF541CACFC4100EFA996 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2E19EF661CACFCDE00EFA996 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = Controller/MainViewController.h; sourceTree = "<group>"; };
+		2E19EF671CACFCDE00EFA996 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Controller/MainViewController.m; sourceTree = "<group>"; };
+		2E19EF721CACFDB300EFA996 /* Menu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Menu.h; path = View/Menu.h; sourceTree = "<group>"; };
+		2E19EF731CACFDB300EFA996 /* Menu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Menu.m; path = View/Menu.m; sourceTree = "<group>"; };
+		2E19EF741CACFDB300EFA996 /* SignView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignView.h; path = View/SignView.h; sourceTree = "<group>"; };
+		2E19EF751CACFDB300EFA996 /* SignView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignView.m; path = View/SignView.m; sourceTree = "<group>"; };
+		2E19EF781CACFDC700EFA996 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = Controller/LoginViewController.h; sourceTree = "<group>"; };
+		2E19EF791CACFDC700EFA996 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = Controller/LoginViewController.m; sourceTree = "<group>"; };
+		2E19EF7B1CACFEB000EFA996 /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NavigationController.h; path = Controller/NavigationController.h; sourceTree = "<group>"; };
+		2E19EF7C1CACFEB000EFA996 /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NavigationController.m; path = Controller/NavigationController.m; sourceTree = "<group>"; };
+		2E19EF7E1CAD059400EFA996 /* CenterButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CenterButton.h; path = View/CenterButton.h; sourceTree = "<group>"; };
+		2E19EF7F1CAD059400EFA996 /* CenterButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CenterButton.m; path = View/CenterButton.m; sourceTree = "<group>"; };
+		2E19EF811CAD05AC00EFA996 /* NoteManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NoteManager.h; path = Model/NoteManager.h; sourceTree = "<group>"; };
+		2E19EF821CAD05AC00EFA996 /* NoteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NoteManager.m; path = Model/NoteManager.m; sourceTree = "<group>"; };
+		2E19EF841CAD05CB00EFA996 /* Note.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Note.h; path = Model/Note.h; sourceTree = "<group>"; };
+		2E19EF851CAD05CB00EFA996 /* Note.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Note.m; path = Model/Note.m; sourceTree = "<group>"; };
+		2E19EF871CAD3CE400EFA996 /* ComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeViewController.h; path = Controller/ComposeViewController.h; sourceTree = "<group>"; };
+		2E19EF881CAD3CE400EFA996 /* ComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComposeViewController.m; path = Controller/ComposeViewController.m; sourceTree = "<group>"; };
+		2E9606AD1CB3D44A00B3AA57 /* NoteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NoteCell.h; path = View/NoteCell.h; sourceTree = "<group>"; };
+		2E9606AE1CB3D44A00B3AA57 /* NoteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NoteCell.m; path = View/NoteCell.m; sourceTree = "<group>"; };
+		2E9606AF1CB3D44A00B3AA57 /* NoteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NoteCell.xib; path = View/NoteCell.xib; sourceTree = "<group>"; };
+		2EBCEB341CAF8CCA00A6B24C /* BookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BookViewController.h; path = Controller/BookViewController.h; sourceTree = "<group>"; };
+		2EBCEB351CAF8CCA00A6B24C /* BookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BookViewController.m; path = Controller/BookViewController.m; sourceTree = "<group>"; };
+		2EBCEB371CAF8D9100A6B24C /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingViewController.h; path = Controller/SettingViewController.h; sourceTree = "<group>"; };
+		2EBCEB381CAF8D9100A6B24C /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingViewController.m; path = Controller/SettingViewController.m; sourceTree = "<group>"; };
+		2EBCEB3A1CAF8DA500A6B24C /* UserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserViewController.h; path = Controller/UserViewController.h; sourceTree = "<group>"; };
+		2EBCEB3B1CAF8DA500A6B24C /* UserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserViewController.m; path = Controller/UserViewController.m; sourceTree = "<group>"; };
+		2EBCEB3D1CAF8DB100A6B24C /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchViewController.h; path = Controller/SearchViewController.h; sourceTree = "<group>"; };
+		2EBCEB3E1CAF8DB100A6B24C /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchViewController.m; path = Controller/SearchViewController.m; sourceTree = "<group>"; };
+		2EBCEB401CAF93A300A6B24C /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfo.h; path = Model/UserInfo.h; sourceTree = "<group>"; };
+		2EBCEB411CAF93A300A6B24C /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfo.m; path = Model/UserInfo.m; sourceTree = "<group>"; };
+		2EBCEB5F1CB395C400A6B24C /* TableMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TableMenu.h; path = View/TableMenu.h; sourceTree = "<group>"; };
+		2EBCEB601CB395C400A6B24C /* TableMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TableMenu.m; path = View/TableMenu.m; sourceTree = "<group>"; };
+		414FADC5BA7D868F39EA6EC2 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		5BA1290CCBBA0500E3404A7F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		BAC3B976E59687E6D40C52EC /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C55538856D20A50FDC70D6F2 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,10 +135,15 @@
 		2E19EF211CACFC4000EFA996 = {
 			isa = PBXGroup;
 			children = (
+				2E19EF621CACFC7D00EFA996 /* Model */,
+				2E19EF611CACFC7100EFA996 /* View */,
+				2E19EF601CACFC6800EFA996 /* Controller */,
 				2E19EF2C1CACFC4000EFA996 /* HelloNote */,
 				2E19EF461CACFC4100EFA996 /* HelloNoteTests */,
 				2E19EF511CACFC4100EFA996 /* HelloNoteUITests */,
 				2E19EF2B1CACFC4000EFA996 /* Products */,
+				C762F9EFFAFA9ED0FBAAC388 /* Pods */,
+				4B9CEF51D7481CBAC66F9EEA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,9 +162,6 @@
 			children = (
 				2E19EF301CACFC4000EFA996 /* AppDelegate.h */,
 				2E19EF311CACFC4000EFA996 /* AppDelegate.m */,
-				2E19EF331CACFC4000EFA996 /* ViewController.h */,
-				2E19EF341CACFC4000EFA996 /* ViewController.m */,
-				2E19EF361CACFC4000EFA996 /* Main.storyboard */,
 				2E19EF391CACFC4000EFA996 /* Assets.xcassets */,
 				2E19EF3B1CACFC4000EFA996 /* LaunchScreen.storyboard */,
 				2E19EF3E1CACFC4000EFA996 /* Info.plist */,
@@ -140,6 +196,77 @@
 			path = HelloNoteUITests;
 			sourceTree = "<group>";
 		};
+		2E19EF601CACFC6800EFA996 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2E19EF781CACFDC700EFA996 /* LoginViewController.h */,
+				2E19EF791CACFDC700EFA996 /* LoginViewController.m */,
+				2E19EF661CACFCDE00EFA996 /* MainViewController.h */,
+				2E19EF671CACFCDE00EFA996 /* MainViewController.m */,
+				2E19EF7B1CACFEB000EFA996 /* NavigationController.h */,
+				2E19EF7C1CACFEB000EFA996 /* NavigationController.m */,
+				2E19EF871CAD3CE400EFA996 /* ComposeViewController.h */,
+				2E19EF881CAD3CE400EFA996 /* ComposeViewController.m */,
+				2EBCEB341CAF8CCA00A6B24C /* BookViewController.h */,
+				2EBCEB351CAF8CCA00A6B24C /* BookViewController.m */,
+				2EBCEB371CAF8D9100A6B24C /* SettingViewController.h */,
+				2EBCEB381CAF8D9100A6B24C /* SettingViewController.m */,
+				2EBCEB3A1CAF8DA500A6B24C /* UserViewController.h */,
+				2EBCEB3B1CAF8DA500A6B24C /* UserViewController.m */,
+				2EBCEB3D1CAF8DB100A6B24C /* SearchViewController.h */,
+				2EBCEB3E1CAF8DB100A6B24C /* SearchViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		2E19EF611CACFC7100EFA996 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2E19EF721CACFDB300EFA996 /* Menu.h */,
+				2E19EF731CACFDB300EFA996 /* Menu.m */,
+				2E19EF741CACFDB300EFA996 /* SignView.h */,
+				2E19EF751CACFDB300EFA996 /* SignView.m */,
+				2E19EF7E1CAD059400EFA996 /* CenterButton.h */,
+				2E19EF7F1CAD059400EFA996 /* CenterButton.m */,
+				2EBCEB5F1CB395C400A6B24C /* TableMenu.h */,
+				2EBCEB601CB395C400A6B24C /* TableMenu.m */,
+				2E9606AD1CB3D44A00B3AA57 /* NoteCell.h */,
+				2E9606AE1CB3D44A00B3AA57 /* NoteCell.m */,
+				2E9606AF1CB3D44A00B3AA57 /* NoteCell.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		2E19EF621CACFC7D00EFA996 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2E19EF811CAD05AC00EFA996 /* NoteManager.h */,
+				2E19EF821CAD05AC00EFA996 /* NoteManager.m */,
+				2E19EF841CAD05CB00EFA996 /* Note.h */,
+				2E19EF851CAD05CB00EFA996 /* Note.m */,
+				2EBCEB401CAF93A300A6B24C /* UserInfo.h */,
+				2EBCEB411CAF93A300A6B24C /* UserInfo.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		4B9CEF51D7481CBAC66F9EEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BAC3B976E59687E6D40C52EC /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C762F9EFFAFA9ED0FBAAC388 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5BA1290CCBBA0500E3404A7F /* Pods.debug.xcconfig */,
+				414FADC5BA7D868F39EA6EC2 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -147,9 +274,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2E19EF571CACFC4100EFA996 /* Build configuration list for PBXNativeTarget "HelloNote" */;
 			buildPhases = (
+				EA840F728EE348E6D1490042 /* Check Pods Manifest.lock */,
 				2E19EF261CACFC4000EFA996 /* Sources */,
 				2E19EF271CACFC4000EFA996 /* Frameworks */,
 				2E19EF281CACFC4000EFA996 /* Resources */,
+				0AD026C782D5E6DAA8648A3C /* Embed Pods Frameworks */,
+				50A40F0FACEA7C2D94FB688A /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -248,7 +378,7 @@
 			files = (
 				2E19EF3D1CACFC4000EFA996 /* LaunchScreen.storyboard in Resources */,
 				2E19EF3A1CACFC4000EFA996 /* Assets.xcassets in Resources */,
-				2E19EF381CACFC4000EFA996 /* Main.storyboard in Resources */,
+				2E9606B11CB3D44A00B3AA57 /* NoteCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,14 +398,77 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		0AD026C782D5E6DAA8648A3C /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		50A40F0FACEA7C2D94FB688A /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EA840F728EE348E6D1490042 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		2E19EF261CACFC4000EFA996 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E19EF351CACFC4000EFA996 /* ViewController.m in Sources */,
+				2EBCEB421CAF93A300A6B24C /* UserInfo.m in Sources */,
 				2E19EF321CACFC4000EFA996 /* AppDelegate.m in Sources */,
+				2E19EF831CAD05AC00EFA996 /* NoteManager.m in Sources */,
+				2EBCEB391CAF8D9100A6B24C /* SettingViewController.m in Sources */,
+				2E19EF681CACFCDE00EFA996 /* MainViewController.m in Sources */,
+				2E19EF7A1CACFDC700EFA996 /* LoginViewController.m in Sources */,
+				2E19EF771CACFDB300EFA996 /* SignView.m in Sources */,
+				2E19EF861CAD05CB00EFA996 /* Note.m in Sources */,
+				2EBCEB3F1CAF8DB100A6B24C /* SearchViewController.m in Sources */,
+				2EBCEB3C1CAF8DA500A6B24C /* UserViewController.m in Sources */,
+				2EBCEB611CB395C400A6B24C /* TableMenu.m in Sources */,
+				2E19EF761CACFDB300EFA996 /* Menu.m in Sources */,
 				2E19EF2F1CACFC4000EFA996 /* main.m in Sources */,
+				2E9606B01CB3D44A00B3AA57 /* NoteCell.m in Sources */,
+				2E19EF891CAD3CE400EFA996 /* ComposeViewController.m in Sources */,
+				2EBCEB361CAF8CCA00A6B24C /* BookViewController.m in Sources */,
+				2E19EF801CAD059400EFA996 /* CenterButton.m in Sources */,
+				2E19EF7D1CACFEB000EFA996 /* NavigationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,7 +476,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EBCEB321CAF85AA00A6B24C /* CenterButton.m in Sources */,
 				2E19EF481CACFC4100EFA996 /* HelloNoteTests.m in Sources */,
+				2EBCEB301CAF821D00A6B24C /* MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,7 +486,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EBCEB331CAF85AB00A6B24C /* CenterButton.m in Sources */,
 				2E19EF531CACFC4100EFA996 /* HelloNoteUITests.m in Sources */,
+				2EBCEB311CAF822B00A6B24C /* MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,14 +508,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		2E19EF361CACFC4000EFA996 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2E19EF371CACFC4000EFA996 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		2E19EF3B1CACFC4000EFA996 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -416,23 +605,27 @@
 		};
 		2E19EF581CACFC4100EFA996 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5BA1290CCBBA0500E3404A7F /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = HelloNote/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Victor.HelloNote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		2E19EF591CACFC4100EFA996 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 414FADC5BA7D868F39EA6EC2 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = HelloNote/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Victor.HelloNote;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -501,6 +694,7 @@
 				2E19EF591CACFC4100EFA996 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2E19EF5A1CACFC4100EFA996 /* Build configuration list for PBXNativeTarget "HelloNoteTests" */ = {
 			isa = XCConfigurationList;
@@ -509,6 +703,7 @@
 				2E19EF5C1CACFC4100EFA996 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2E19EF5D1CACFC4100EFA996 /* Build configuration list for PBXNativeTarget "HelloNoteUITests" */ = {
 			isa = XCConfigurationList;
@@ -517,6 +712,7 @@
 				2E19EF5F1CACFC4100EFA996 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
