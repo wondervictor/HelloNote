@@ -133,6 +133,7 @@ static NSInteger counter = 0;
         [menu viewDisappearFinishWithBlock:^(NSInteger index) {
             self.bookName = [self.bookList objectAtIndex:index];
             [bookButton setTitle:self.bookName forState:UIControlStateNormal];
+           // self.bookName = [self.bookList objectAtIndex:index];
         }];
     }
     else if (menu.showed == NO) {
@@ -193,10 +194,6 @@ static NSInteger counter = 0;
     note.noteContent = content;
     note.noteDate = dateString;
     note.noteTitle = title;
-    if (self.bookName == nil) {
-        NSLog(@"dfgehr");
-        self.bookName = @"默认笔记本";
-    }
     note.bookName = self.bookName;
     
     if (counter == 1) {
@@ -257,8 +254,6 @@ static NSInteger counter = 0;
         
         self.noteTitle.text = currentNote.noteTitle;
         self.noteContent.text = currentNote.noteContent;
-        NSLog(@"66666%@",currentNote.bookName);
-        
         [bookButton setTitle:currentNote.bookName forState:UIControlStateNormal];
     }
     

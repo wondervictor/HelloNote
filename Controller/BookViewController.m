@@ -8,6 +8,9 @@
 
 #import "BookViewController.h"
 
+#import "UserInfo.h"
+
+
 
 #define  MAIN_WIDTH     self.view.frame.size.width
 #define  MAIN_HEIGHT    self.view.frame.size.height
@@ -31,14 +34,15 @@
     [self.bookList addObjectsFromArray: [userDafault objectForKey:@"booklist"]];
     
     self.view.backgroundColor = DEFAULT_COLOR;
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 130, MAIN_WIDTH, MAIN_HEIGHT - 130) style:UITableViewStylePlain];;
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, MAIN_WIDTH, MAIN_HEIGHT - 130) style:UITableViewStylePlain];;
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
-    
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addNewBook:)];
+    self.navigationItem.rightBarButtonItem = addButton;
     
     
     // Do any additional setup after loading the view.
@@ -55,6 +59,36 @@
     
 }
 */
+
+- (void)addNewBook:(UIBarButtonItem *)sender {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"添加笔记本" message:@"请输入要添加的笔记本" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *alertAction = [UIAlertAction actionWithTitle:@"确定添加" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UITextField *name = alert.textFields.firstObject;
+        [self.bookList addObject:name.text];
+        [self.tableView reloadData];
+        UserInfo *userInfo = [UserInfo sharedManager];
+        [userInfo addNewBookWithName:name.text];
+        
+        
+        [alert dismissViewControllerAnimated:YES completion:nil];
+        
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [alert dismissViewControllerAnimated:YES completion:nil];
+
+    }];
+    
+    [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        
+    }];
+    
+    [alert addAction:alertAction];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:^{
+
+    }];
+}
+
 
 #pragma mark - UITableViewDataSource
 

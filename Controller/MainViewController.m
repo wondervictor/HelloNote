@@ -43,7 +43,6 @@
 @property (nonatomic, strong) SearchViewController *searchViewController;
 
 
-
 @end
 
 @implementation MainViewController
@@ -102,6 +101,11 @@
 }
 
 - (void)touchSubButtonAtIndex:(NSInteger)index {
+    NoteManager *manager = [NoteManager sharedManager];
+    [manager getAllNote];
+    [manager getBookList];
+    
+    
     if (index == 0) {
         ComposeViewController *compose = [ComposeViewController new];
         UINavigationController *navigationController = [[UINavigationController alloc]initWithRootViewController:compose];

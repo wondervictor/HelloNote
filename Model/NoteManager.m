@@ -49,7 +49,9 @@
         BmobObject *object = [array lastObject];
         [object deleteInBackground];
     }];
+    
     [self createNewNote:note];
+    
 }
 
 - (void)getAllNote {

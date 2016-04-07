@@ -7,6 +7,7 @@
 //
 
 #import "SearchViewController.h"
+#import "ComposeViewController.h"
 
 #import "NoteCell.h"
 #import "Note.h"
@@ -56,7 +57,7 @@ static NSString *const cellIdentifier = @"NoteCell";
     self.searchController.searchResultsUpdater = self;
     self.tableView.tableHeaderView = self.searchController.searchBar;
     [self.searchController.searchBar sizeToFit];
-    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.dimsBackgroundDuringPresentation = YES;
     // Do any additional setup after loading the view.
 }
 
@@ -120,6 +121,17 @@ static NSString *const cellIdentifier = @"NoteCell";
 
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NoteManager *manager = [NoteManager sharedManager];
+    NSLog(@"%lu",indexPath.row);
+    // 有一个错误 show 有作用，present无作用
+    Note *note = [manager getNoteFromBmobObject:[self.filterNotes objectAtIndex:indexPath.row]];
+    ComposeViewController *compose = [[ComposeViewController alloc]init];
+    [compose showCurrentNote:note];
+    // [self presentViewController:navigationController animated:YES completion:nil];
+    [self showViewController:compose sender:nil];
 }
 
 
