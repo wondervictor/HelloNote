@@ -36,26 +36,37 @@
     nameTitle.center = CGPointMake(MAIN_WIDTH/2.0, MAIN_HEIGHT/2.0-100);
     nameTitle.backgroundColor = [UIColor clearColor];
     nameTitle.text = name;
+    nameTitle.tag = 1001;
+    nameTitle.textColor = [UIColor whiteColor];
     nameTitle.font = [UIFont fontWithName:@"HelveticaNeue" size:30];
     [self.view addSubview:nameTitle];
     
     
-    UIButton *logoutButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 150, 50)];
-    logoutButton.center = CGPointMake(MAIN_WIDTH/2.0, MAIN_HEIGHT/2.0 + 100);
-    logoutButton.backgroundColor = [UIColor redColor];
+    UIButton *logoutButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 200, 50)];
+    logoutButton.center = CGPointMake(MAIN_WIDTH/2.0, MAIN_HEIGHT/2.0 + 200);
+    logoutButton.backgroundColor = [UIColor whiteColor];
     logoutButton.layer.cornerRadius = 20;
     
-    [logoutButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [logoutButton setTitleColor:DEFAULT_COLOR forState:UIControlStateNormal];
     [logoutButton setTitle:@"退出" forState:UIControlStateNormal];
     [logoutButton addTarget:self action:@selector(logOut) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:logoutButton];
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTitle) name:@"UserDidChangedNotification" object:nil];
     
     
     
     // Do any additional setup after loading the view.
 }
 
+
+- (void)changeTitle {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *name = [userDefaults objectForKey:@"username"];
+    UILabel *label = [self.view viewWithTag:1001];
+    
+    label.text = name;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -68,11 +79,11 @@
 
 - (void)logOut {
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-    [userDefault setObject:@"" forKey:@"username"];
-    [userDefault setObject:@"" forKey:@"pwd"];
-    [userDefault setObject:nil forKey:@"booklist"];
+
     LoginViewController *loginViewController = [[LoginViewController alloc]init] ;
-    [self showViewController:loginViewController sender:nil];
+    [self presentViewController:loginViewController animated:YES completion:^{
+        [userDefault setObject:@"" forKey:@"booklist"];
+    }];
 }
 
 

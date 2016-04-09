@@ -27,4 +27,6 @@
 
 - (id)initWithTitleArray:(NSArray *)titleArray image:(NSArray *)imageArray mainTitle:(NSString *)title withWidth:(CGFloat)width backgroundColor:(UIColor *)backColor;
 
+- (void)setMainTitle:(NSString *)title;
+
 @end

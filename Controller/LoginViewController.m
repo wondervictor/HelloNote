@@ -141,15 +141,26 @@
     
     if (isCorrect) {
         NoteManager *manager = [NoteManager sharedManager];
-        [manager getCurrentUserInfo:userInfo];
-        MainViewController *mainViewController = [[MainViewController alloc]init];
-        NavigationController *nv = [[NavigationController alloc]initWithRootViewController:mainViewController];
-        [self showViewController:nv sender:nil];
-        
         NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-        [userDefault setObject:userInfo.userName forKey:@"username"];
-        [userDefault setObject:userInfo.userPwd forKey:@"pwd"];
-        [userDefault synchronize];
+        [manager getCurrentUserInfo:userInfo];
+        if ([userDefault objectForKey:@"username"] == nil) {
+            [userDefault setObject:userInfo.userName forKey:@"username"];
+            [userDefault setObject:userInfo.userPwd forKey:@"pwd"];
+            [userDefault synchronize];
+            MainViewController *mainViewController = [[MainViewController alloc]init];
+            NavigationController *nv = [[NavigationController alloc]initWithRootViewController:mainViewController];
+            [self showViewController:nv sender:nil];
+        } else {
+            [self dismissViewControllerAnimated:YES completion:^{
+                [userDefault setObject:userInfo.userName forKey:@"username"];
+                [userDefault setObject:userInfo.userPwd forKey:@"pwd"];
+                [userDefault synchronize];
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"UserDidChangedNotification" object:nil];
+
+            }];
+        }
+        
+
         
     }
     else {

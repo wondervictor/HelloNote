@@ -39,9 +39,15 @@
     return self;
 }
 
+- (void)setMainTitle:(NSString *)title {
+    UIButton *titleButton = (UIButton *)[self viewWithTag:1011];
+    [titleButton setTitle:title forState:UIControlStateNormal];
+}
+
 - (void)configureMainTitle:(NSString *)title withWidth:(CGFloat)width {
     UIButton *titleButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 30, width, 50)];
     [titleButton setTitle:title forState:UIControlStateNormal];
+    titleButton.tag = 1011;
     CALayer *layer = titleButton.layer;
     layer.shadowOffset = CGSizeMake(0.5,0.5 );
     layer.cornerRadius = 3.0f;

@@ -76,6 +76,7 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(menuTitleTouched:) name:@"TitleTouchedNotification" object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshNotes) name:@"ComposeControllerDidAddNewNoteNotification" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userChanged) name:@"UserDidChangedNotification" object:nil];
    
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshNotes)];
     self.navigationItem.rightBarButtonItem = refreshButton;
@@ -100,8 +101,18 @@
     [refreshControl endRefreshing];
 }
 
+- (void)userChanged {
+    NoteManager *manager = [NoteManager sharedManager];
+    manager.delegate = self;
+
+    [manager getAllNote];
+    [manager getBookList];
+}
+
+
 - (void)touchSubButtonAtIndex:(NSInteger)index {
     NoteManager *manager = [NoteManager sharedManager];
+    manager.delegate = self;
     [manager getAllNote];
     [manager getBookList];
     
@@ -126,7 +137,7 @@
         switch (index) {
             case 0:[self showViewController:[self userViewController] sender:nil];break;
             case 1:[self showViewController:[self settingViewController] sender:nil];break;
-            case 2:[self test]; break;
+            case 2: break;
             case 3:[self showViewController:[self searchViewController] sender:nil];break;
             default:
                 break;
@@ -158,13 +169,11 @@
 }
 
 - (void)refreshNotes {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NoteManager *manager = [NoteManager sharedManager];
-        manager.delegate = self;
-        [manager getAllNote];
-        [manager getBookList];
-        
-    });
+    NoteManager *manager = [NoteManager sharedManager];
+    manager.delegate = self;
+    [manager getAllNote];
+    [manager getBookList];
+
 }
 
 

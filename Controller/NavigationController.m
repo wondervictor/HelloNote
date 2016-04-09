@@ -49,7 +49,6 @@
     
     UserInfo *userInfo = [UserInfo sharedManager];
     NSString *userName = [userInfo getUserName];
-    NSLog(@"%@",userName);
     UIColor *defaultColor = [UIColor colorWithRed:224/255.0 green:238/255.0 blue:238/255.0 alpha:0.9];
     self.menu = [[Menu alloc]initWithTitleArray:@[@"个人信息",@"设置",@"分享",@"搜索"]
                                           image:@[@"profile_1",@"setting",@"posts",@"discover"] mainTitle:userName withWidth:200 backgroundColor:defaultColor];
@@ -58,6 +57,7 @@
     
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(menuDidTouched:) name:@"MenuDidTouchedNotification" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userChanged) name:@"UserDidChangedNotification" object:nil];
     
     
     // Do any additional setup after loading the view.
@@ -66,6 +66,13 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)userChanged {
+    UserInfo *userInfo = [UserInfo sharedManager];
+    [self.menu setMainTitle:userInfo.userName];
+    
+    
 }
 
 - (void)menuDidTouched:(NSNotification *)notification {
