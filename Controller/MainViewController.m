@@ -61,6 +61,7 @@
     } toParentView:self.view];
     centerButton.delegate = self;
     
+    
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 130, MAIN_WIDTH, MAIN_HEIGHT - 130) style:UITableViewStylePlain];;
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.dataSource = self;
@@ -68,6 +69,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([NoteCell class]) bundle:nil] forCellReuseIdentifier:@"NoteCell"];
+
     
     [self.view addSubview:self.tableView];
     
@@ -76,10 +78,17 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(menuTitleTouched:) name:@"TitleTouchedNotification" object:nil];
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshNotes) name:@"ComposeControllerDidAddNewNoteNotification" object:nil];
+    
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userChanged) name:@"UserDidChangedNotification" object:nil];
    
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshNotes)];
     self.navigationItem.rightBarButtonItem = refreshButton;
+    
+    UIBarButtonItem *syncButton = [[UIBarButtonItem alloc]initWithTitle:@"同步" style:UIBarButtonItemStylePlain target:self action:@selector(syncNote)];
+    
+    self.navigationItem.leftBarButtonItem = syncButton;
+    
+    
     
     UIRefreshControl *rc = [[UIRefreshControl alloc]init];
     rc.attributedTitle = [[NSAttributedString alloc]initWithString:@"下拉刷新"];
@@ -121,6 +130,7 @@
         ComposeViewController *compose = [ComposeViewController new];
         UINavigationController *navigationController = [[UINavigationController alloc]initWithRootViewController:compose];
         [compose showCurrentNote:nil];
+        navigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
         [self presentViewController:navigationController animated:YES completion:^{
             
         }];
@@ -168,6 +178,14 @@
     
 }
 
+// 同步
+
+- (void)syncNote {
+    
+}
+
+
+
 - (void)refreshNotes {
     NoteManager *manager = [NoteManager sharedManager];
     manager.delegate = self;
@@ -176,13 +194,18 @@
 
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+}
 
 #pragma mark - NoteManagerDelegate
 - (void)getAllNotes:(NSArray *)notes {
     [self.noteList removeAllObjects];
     [self.noteList addObjectsFromArray:notes];
-    NSLog(@"%lu",[self.noteList count]);
-    [self.tableView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+
+    });
 }
 
 
@@ -192,7 +215,6 @@
         NSLog(@"correct");
     }
     else {
-        NSLog(@"Failed");
         NSLog(@"%@",string);
     }
 }
@@ -289,9 +311,7 @@
     }
     [self.tableView reloadData];
     
-    
 }
-
 
 
 

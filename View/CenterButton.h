@@ -32,7 +32,13 @@
  
  */
 
-- (id)initWithFrame:(CGRect)frame centerPoint:(CGPoint)center centerRadius:(CGFloat)centerRadius centerImage:(NSString *)image withSubButtons:(NSInteger)nums backImage:(void(^)(CenterButton *))imageBlock toParentView:(UIView *)parentView;
+- (id)initWithFrame:(CGRect)frame
+        centerPoint:(CGPoint)center
+       centerRadius:(CGFloat)centerRadius
+        centerImage:(NSString *)image
+     withSubButtons:(NSInteger)nums
+          backImage:(void(^)(CenterButton *))imageBlock
+       toParentView:(UIView *)parentView;
 
 - (void)setSubButtonImage:(NSString *)imageName index:(NSInteger)index;
 

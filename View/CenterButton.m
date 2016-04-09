@@ -8,8 +8,8 @@
 
 #import "CenterButton.h"
 
-#define VIEW_WIDTH   self.frame.size.width
-#define VIEW_HEIGHT  self.frame.size.height
+#define VIEW_WIDTH   (self.frame.size.width)
+#define VIEW_HEIGHT  (self.frame.size.height)
 
 @interface CenterButton() {
     // birth

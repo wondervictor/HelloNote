@@ -70,7 +70,6 @@ static NSString *const cellIdentifier = @"NoteCell";
     
     NoteManager *manager = [NoteManager sharedManager];
     NSArray *noteTitles = [manager getTitlesFromNoteArray:self.searchNotes];
-    NSLog(@"4444%lu",[self.searchNotes count]);
     
     NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", self.searchController.searchBar.text];
     

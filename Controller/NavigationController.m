@@ -26,9 +26,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    for (UIView *view_ in self.view.subviews) {
-        if ([NSStringFromClass([view_ class])isEqualToString:@"UINavigationTransitionView"]) {
-            self.transitionView = view_;
+    for (UIView *view in self.view.subviews) {
+        if ([NSStringFromClass([view class])isEqualToString:@"UINavigationTransitionView"]) {
+            self.transitionView = view;
         }
     }
     

@@ -7,7 +7,11 @@
 //
 
 #import "NoteManager.h"
- 
+
+#import "CoreDataManager.h"
+#import "NoteBook.h"
+
+
 
 @implementation NoteManager
 
@@ -24,6 +28,90 @@
     });
     return sharedManager;
 }
+
+- (CoreDataManager *)coreDataManager {
+    if (_coreDataManager == nil) {
+        _coreDataManager = [CoreDataManager new];
+        [_coreDataManager setCoreData];
+    }
+    return _coreDataManager;
+}
+
+
+
+- (void)createNewNote:(Note *)note {
+    UserInfo *useInfo = [UserInfo sharedManager];
+    NoteBook *noteBook = [NSEntityDescription insertNewObjectForEntityForName:@"NoteBook" inManagedObjectContext:[self coreDataManager].context];
+    noteBook.content = note.noteContent;
+    noteBook.date = note.noteDate;
+    noteBook.title = note.noteTitle;
+    noteBook.bookname = note.bookName;
+    noteBook.userclass = [useInfo getClassName];
+    [[self coreDataManager]saveContext];
+    
+}
+
+
+- (void)modifyNote:(Note *)note {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"NoteBook"];
+    NSArray *fetchObject = [[self coreDataManager].context executeFetchRequest:request error:nil];
+    for (NoteBook *item in fetchObject) {
+        if ([item.date isEqualToString:note.noteDate] ) {
+            [[self coreDataManager].context deleteObject:item];
+            [self createNewNote:note];
+            break;
+            
+        }
+    }
+
+}
+
+- (void)getAllNote {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"NoteBook"];
+    NSArray *array = [[self coreDataManager].context executeFetchRequest:request error:nil];
+#warning Do not run this because the data type will conflict
+    [_delegate getAllNotes:array];
+#warning here
+}
+
+
+- (void)deleteNote:(Note *)note {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"NoteBook"];
+    NSArray *fetchObjects = [[self coreDataManager].context executeFetchRequest:request error:nil];
+    for (NoteBook *item in fetchObjects) {
+        if ([note.noteDate isEqual:item.date]) {
+            [[self coreDataManager].context deleteObject:item];
+        }
+    }
+    [[self coreDataManager]saveContext];
+}
+
+- (void)getBookList {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    NSArray *array = [[self coreDataManager].context executeFetchRequest:request error:nil];
+#warning Do not run this because the data type will conflict
+    [_delegate getNoteOfABook:array];
+#warning here
+}
+
+- (void) getNoteOfBook:(NSString *)bookName {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"NoteBook"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@",bookName];
+    [request setPredicate:predicate];
+    NSArray *fetchObjects = [[self coreDataManager].context executeFetchRequest:request error:nil];
+#warning handle this
+    
+}
+
+
+
+- (void)getCurrentUserInfo:(UserInfo *)user {
+    self.userInfo = user;
+    className = [self.userInfo getClassName];//self.userInfo.className;
+}
+
+
+/*
 
 - (void)createNewNote:(Note *)note {
     BmobObject *noteObject = [[BmobObject alloc]initWithClassName:className];
@@ -105,7 +193,6 @@
 - (void)getCurrentUserInfo:(UserInfo *)user {
     self.userInfo = user;
     className = [self.userInfo getClassName];//self.userInfo.className;
-    NSLog(@"%@",className);
 }
 
 
@@ -148,6 +235,6 @@
 
 }
 
-
+*/
 
 @end

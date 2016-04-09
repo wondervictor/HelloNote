@@ -185,14 +185,10 @@ static NSInteger counter = 0;
     
     NSString *content = self.noteContent.text;
     NSString *title = self.noteTitle.text;
-    NSDate *date = [NSDate date];
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-    [dateFormatter setDateFormat:@"YYYY-MM-dd"];
-    NSString *dateString = [dateFormatter stringFromDate:date];
+
     NoteManager *manager = [NoteManager sharedManager];
     Note *note = [Note new];
     note.noteContent = content;
-    note.noteDate = dateString;
     note.noteTitle = title;
     note.bookName = self.bookName;
     
@@ -200,6 +196,11 @@ static NSInteger counter = 0;
         [manager modifyNote:note];
     }
     else if (counter == 0)  {
+        NSDate *date = [NSDate date];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
+        [dateFormatter setDateFormat:@"YYYY-MM-dd"];
+        NSString *dateString = [dateFormatter stringFromDate:date];
+        note.noteDate = dateString;
         [manager createNewNote:note];
     }
     
