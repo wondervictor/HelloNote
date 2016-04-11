@@ -12,8 +12,8 @@
 
 
 
-#define  MAIN_WIDTH     self.view.frame.size.width
-#define  MAIN_HEIGHT    self.view.frame.size.height
+#define  MAIN_WIDTH     (self.view.frame.size.width)
+#define  MAIN_HEIGHT    (self.view.frame.size.height)
 #define DEFAULT_COLOR   [UIColor colorWithRed:50/255.0 green:205/255.0 blue:50/255.0 alpha:0.98]
 
 

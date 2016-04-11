@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class Note;
+@class NoteBook;
 
+@protocol ComposeControllerDelegate <NSObject>
+
+- (void)finishComposeNote;
+
+@end
 
 @interface ComposeViewController : UIViewController
 
@@ -17,8 +22,9 @@
 
 @property (nonatomic, strong) UITextField *noteTitle;
 
+@property (nonatomic, weak) id <ComposeControllerDelegate> delegate;
 
-- (void)showCurrentNote:(Note *)currentNote;
+- (void)showCurrentNote:(NoteBook *)currentNote;
 
 
 @end

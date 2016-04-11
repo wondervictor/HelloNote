@@ -16,8 +16,8 @@
 
 #import "SignView.h"
 
-#define  MAIN_WIDTH   self.view.frame.size.width
-#define  MAIN_HEIGHT  self.view.frame.size.height
+#define  MAIN_WIDTH   (self.view.frame.size.width)
+#define  MAIN_HEIGHT  (self.view.frame.size.height)
 
 @interface LoginViewController ()<UITextFieldDelegate,SignViewDelegate,UserInfoDelegate>
 

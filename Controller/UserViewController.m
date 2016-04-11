@@ -9,16 +9,20 @@
 #import "LoginViewController.h"
 #import "UserViewController.h"
 
-#define  MAIN_WIDTH     self.view.frame.size.width
-#define  MAIN_HEIGHT    self.view.frame.size.height
+#define  MAIN_WIDTH     (self.view.frame.size.width)
+#define  MAIN_HEIGHT    (self.view.frame.size.height)
 
 
 #define DEFAULT_COLOR   [UIColor colorWithRed:50/255.0 green:205/255.0 blue:50/255.0 alpha:0.98]
+
+NSString *const UserDidChangedNotification = @"UserDidChangedNotification";
+
 
 
 @interface UserViewController ()
 
 @end
+
 
 @implementation UserViewController
 
@@ -52,7 +56,7 @@
     [logoutButton addTarget:self action:@selector(logOut) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:logoutButton];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTitle) name:@"UserDidChangedNotification" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(changeTitle) name:UserDidChangedNotification object:nil];
     
     
     

@@ -13,7 +13,7 @@
 
 #import "NoteManager.h"
 
-#import "Note.h"
+#import "NoteBook.h"
 
 #define  MAIN_WIDTH     self.view.frame.size.width
 #define  MAIN_HEIGHT    self.view.frame.size.height
@@ -31,6 +31,7 @@ static NSInteger counter = 0;
 
 @property (nonatomic, strong) NSString *bookName;
 @property (nonatomic, strong) NSArray *bookList;
+
 
 @end
 
@@ -188,6 +189,7 @@ static NSInteger counter = 0;
 
     NoteManager *manager = [NoteManager sharedManager];
     Note *note = [Note new];
+    
     note.noteContent = content;
     note.noteTitle = title;
     note.bookName = self.bookName;
@@ -204,9 +206,13 @@ static NSInteger counter = 0;
         [manager createNewNote:note];
     }
     
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"ComposeControllerDidAddNewNoteNotification" object:nil userInfo:nil];
+    if ([_delegate respondsToSelector:@selector(finishComposeNote)]) {
+        [_delegate finishComposeNote];
+        NSLog(@"afsgdhjhgfdfdghdjjhgf");
+    }
     
     [self dismissViewControllerAnimated:YES completion:^{
+        
     }];
 }
 
@@ -243,7 +249,7 @@ static NSInteger counter = 0;
     return YES;
 }
 
-- (void)showCurrentNote:(Note *)currentNote {
+- (void)showCurrentNote:(NoteBook *)currentNote {
     counter = 1;
     [self configureViews];
     if (currentNote == nil) {
@@ -253,9 +259,9 @@ static NSInteger counter = 0;
     }
     else {
         
-        self.noteTitle.text = currentNote.noteTitle;
-        self.noteContent.text = currentNote.noteContent;
-        [bookButton setTitle:currentNote.bookName forState:UIControlStateNormal];
+        self.noteTitle.text = currentNote.title;
+        self.noteContent.text = currentNote.content;
+        [bookButton setTitle:currentNote.bookname forState:UIControlStateNormal];
     }
     
 }

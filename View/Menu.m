@@ -7,8 +7,8 @@
 //
 
 #import "Menu.h"
-#define MAIN_WIDTH   [UIScreen mainScreen].bounds.size.width
-#define MAIN_HEIGHT  [UIScreen mainScreen].bounds.size.height
+#define MAIN_WIDTH   ([UIScreen mainScreen].bounds.size.width)
+#define MAIN_HEIGHT  ([UIScreen mainScreen].bounds.size.height)
 
 @interface Menu()<UITableViewDelegate,UITableViewDataSource>
 

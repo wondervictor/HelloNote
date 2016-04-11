@@ -6,8 +6,8 @@
 //  Copyright © 2016 VicChan. All rights reserved.
 //
 
-#define VIEW_WIDTH   self.frame.size.width
-#define VIEW_HEIGHT  self.frame.size.height
+#define VIEW_WIDTH   (self.frame.size.width)
+#define VIEW_HEIGHT  (self.frame.size.height)
 
 #import "UserInfo.h"
 #import "SignView.h"

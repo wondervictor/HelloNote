@@ -10,17 +10,6 @@
 
 @interface UserViewController : UIViewController
 
-/**
- 
- 1. 退出账号
- 2. 笔记统计
- 3. 头像
- */
-
-
-
-
-
-
-
 @end
+
+extern NSString *const UserDidChangedNotification;

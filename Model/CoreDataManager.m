@@ -59,6 +59,7 @@ static NSString *const storeFileName = @"note.sqlite";
 }
 
 - (void)saveContext {
+    NSLog(@"%@", [self getDataStoreFilePath].absoluteString);
     if ([_context hasChanges]) {
         NSError *error = nil;
         if ([_context save:&error]) {

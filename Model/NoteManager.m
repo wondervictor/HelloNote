@@ -10,11 +10,10 @@
 
 #import "CoreDataManager.h"
 #import "NoteBook.h"
-
+#import "User.h"
 
 
 @implementation NoteManager
-
 
 - (void)setClassName:(NSString *)name {
     className = name;
@@ -28,6 +27,23 @@
     });
     return sharedManager;
 }
+
+
+/*
+- (void)setClassName:(NSString *)name {
+    className = name;
+}
+
++ (NoteManager *)sharedManager {
+    static NoteManager *sharedManager = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedManager = [[self alloc]init];
+    });
+    return sharedManager;
+}
+ 
+ */
 
 - (CoreDataManager *)coreDataManager {
     if (_coreDataManager == nil) {
@@ -53,14 +69,19 @@
 
 
 - (void)modifyNote:(Note *)note {
+    NSLog(@"modify-manager");
+
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"NoteBook"];
     NSArray *fetchObject = [[self coreDataManager].context executeFetchRequest:request error:nil];
     for (NoteBook *item in fetchObject) {
-        if ([item.date isEqualToString:note.noteDate] ) {
+        NSLog(@"modify- array");
+
+        if ([item.title isEqualToString:note.noteTitle] ) {
             [[self coreDataManager].context deleteObject:item];
+            NSLog(@"modify- same");
+
             [self createNewNote:note];
             break;
-            
         }
     }
 
@@ -73,7 +94,6 @@
     [_delegate getAllNotes:array];
 #warning here
 }
-
 
 - (void)deleteNote:(Note *)note {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"NoteBook"];
@@ -89,20 +109,27 @@
 - (void)getBookList {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
     NSArray *array = [[self coreDataManager].context executeFetchRequest:request error:nil];
+    User *user = [array lastObject];
+    NSArray *bookList = [NSArray  new];
+    bookList = [NSKeyedUnarchiver unarchiveObjectWithData:user.books];
+    if ([bookList count] == 0) {
+        bookList = @[@"默认笔记本"];
+    }
 #warning Do not run this because the data type will conflict
-    [_delegate getNoteOfABook:array];
+    [_delegate getNoteBookList:bookList];
 #warning here
 }
 
-- (void) getNoteOfBook:(NSString *)bookName {
+- (NSArray *) getNoteOfBook:(NSString *)bookName {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"NoteBook"];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@",bookName];
     [request setPredicate:predicate];
     NSArray *fetchObjects = [[self coreDataManager].context executeFetchRequest:request error:nil];
+    return fetchObjects;
+    
 #warning handle this
     
 }
-
 
 
 - (void)getCurrentUserInfo:(UserInfo *)user {
@@ -111,7 +138,32 @@
 }
 
 
+
+- (BOOL)setDataForCellWithNote:(NoteBook *)note Handler:(void (^)(NSString *, NSString *, NSString *))block {
+    NSString *title = note.title;
+    NSString *content = note.content;
+    NSString *date = note.date;
+    if (note!=nil) {
+        block(title,content,date);
+        return YES;
+    }
+    else {
+        return NO;
+    }
+    
+    
+}
+
+
+
+
+
+
+
 /*
+
+
+
 
 - (void)createNewNote:(Note *)note {
     BmobObject *noteObject = [[BmobObject alloc]initWithClassName:className];
@@ -234,7 +286,23 @@
     return returnArray;
 
 }
+ 
+ */
 
-*/
+
+- (void)syncNoteToRemote {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+    });
+}
+
+- (void)syncNoteToHome {
+    
+}
+
+
+
+
+
 
 @end

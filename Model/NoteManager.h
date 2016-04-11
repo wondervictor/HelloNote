@@ -12,12 +12,19 @@
 #import "CoreDataManager.h"
 #import "UserInfo.h"
 
+@class NoteBook;
+
+typedef void (^CompletionHandler) (BOOL finished,NSString *error);
+
+
 @protocol NoteManagerDelegate <NSObject>
 
 @optional
 - (void)getAllNotes:(NSArray *)notes;
-- (void)getNoteOfABook:(NSArray *)notes;
+- (void)getNoteOfaBook:(NSArray *)notes;
 - (void)getNoteBookList:(NSArray *)books;
+- (void)finishSyncingNoteWithCompletitonHandler:(CompletionHandler)block;
+
 
 
 @end
@@ -43,7 +50,7 @@ static NSString *className;
 /* 设置Bmob class 名 */
 - (void)setClassName:(NSString *)name;
 /* 获取某一本笔记本的笔记 */
-- (void)getNoteOfBook:(NSString *)bookName;
+- (NSArray *)getNoteOfBook:(NSString *)bookName;
 /* 获取当前用户的信息 */
 - (void)getCurrentUserInfo:(UserInfo *)user;
 /* 修改一篇笔记 */
@@ -52,8 +59,15 @@ static NSString *className;
 - (Note *)getNoteFromBmobObject:(BmobObject *)object;
 /* 获取所有笔记本名 */
 - (void)getBookList;
-
 // 搜索内部实现
+/* 远程同步to remote */
+- (void)syncNoteToRemote;
+/*  远程同步to home */
+- (void)syncNoteToHome;
+
+/*简化cell工作*/
+- (BOOL)setDataForCellWithNote:(NoteBook *)note Handler:(void (^)(NSString *title,NSString *content,NSString *date))block;
+
 
 /*  */
 - (NSArray *)getTitlesFromNoteArray:(NSArray *)array;

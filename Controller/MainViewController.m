@@ -22,13 +22,16 @@
 #import "NoteManager.h"
 #import "Note.h"
 
+#import "NoteBook.h"
 
-#define  MAIN_WIDTH     self.view.frame.size.width
-#define  MAIN_HEIGHT    self.view.frame.size.height
+
+
+#define  MAIN_WIDTH     (self.view.frame.size.width)
+#define  MAIN_HEIGHT    (self.view.frame.size.height)
 #define DEFAULT_COLOR   [UIColor colorWithRed:50/255.0 green:205/255.0 blue:50/255.0 alpha:0.98]
 
 
-@interface MainViewController ()<CenterButtonDelegate,UserInfoDelegate,NoteManagerDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface MainViewController ()<ComposeControllerDelegate,CenterButtonDelegate,UserInfoDelegate,NoteManagerDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -77,9 +80,9 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(menuViewTouchedAt:) name:@"MenuViewTouchedNotification" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(menuTitleTouched:) name:@"TitleTouchedNotification" object:nil];
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(refreshNotes) name:@"ComposeControllerDidAddNewNoteNotification" object:nil];
-    
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userChanged) name:@"UserDidChangedNotification" object:nil];
+
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userChanged) name:UserDidChangedNotification
+ object:nil];
    
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshNotes)];
     self.navigationItem.rightBarButtonItem = refreshButton;
@@ -100,22 +103,18 @@
 
 - (void)refreshControlRefreshed:(UIRefreshControl *)refreshControl {
     refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"更新数据中..."];
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MMM d, h:mm a"];
-    NSString *lastUpdated = [NSString stringWithFormat:@"上次更新日期 %@",
-                             [formatter stringFromDate:[NSDate date]]];
-    refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdated];
     [self refreshNotes];
     [refreshControl endRefreshing];
 }
 
 - (void)userChanged {
-    NoteManager *manager = [NoteManager sharedManager];
-    manager.delegate = self;
+    [self refreshNotes];
 
-    [manager getAllNote];
-    [manager getBookList];
+}
+
+#pragma mark - ComposeControllerDelegate
+- (void)finishComposeNote {
+    [self refreshNotes];
 }
 
 
@@ -128,6 +127,7 @@
     
     if (index == 0) {
         ComposeViewController *compose = [ComposeViewController new];
+        compose.delegate = self;
         UINavigationController *navigationController = [[UINavigationController alloc]initWithRootViewController:compose];
         [compose showCurrentNote:nil];
         navigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
@@ -136,6 +136,7 @@
         }];
     }
     else if (index == 1) {
+
         [self showViewController:[self bookViewController] sender:nil];
     }
 }
@@ -157,7 +158,6 @@
 }
 
 - (void)getNoteBookList:(NSArray *)books {
-    NSLog(@"%lu",[books count]);
     self.bookList = books;
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:books forKey:@"booklist"];
@@ -173,12 +173,12 @@
     note.noteContent = @"测试notebook";
     note.bookName = @"haha";
     
-    [manager createNewNote:note];
+    //[manager createNewNote:note];
     
     
 }
 
-// 同步
+#pragma mark - 同步
 
 - (void)syncNote {
     
@@ -207,6 +207,11 @@
 
     });
 }
+ 
+- (void)getNoteOfaBook:(NSArray *)notes {
+    NSLog(@"dafghj");
+}
+
 
 
 #pragma mark - UserInfoDelegate
@@ -281,11 +286,24 @@
     NoteCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"NoteCell" forIndexPath:indexPath];
     //Note *note = [self.noteList objectAtIndex:indexPath.row];
     NoteManager *manager = [NoteManager sharedManager];
-    Note *note = [manager getNoteFromBmobObject:[self.noteList objectAtIndex:indexPath.row]];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    BOOL isSuccess = [manager setDataForCellWithNote:[self.noteList objectAtIndex:indexPath.row] Handler:^(NSString *title, NSString *content, NSString *date) {
+        cell.titleLabel.text = title;
+        cell.contentLabel.text = content;
+        cell.dateLabel.text = date;
+    }];
+    if (isSuccess == NO) {
+        return nil;
+    }
+    
+    /*
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.titleLabel.text = note.noteTitle;
     cell.contentLabel.text = note.noteContent;
     cell.dateLabel.text = note.noteDate;
+     
+     */
     return cell;
 }
 
@@ -303,8 +321,7 @@
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NoteManager *manager = [NoteManager sharedManager];
-        Note *note = [manager getNoteFromBmobObject:[self.noteList objectAtIndex:indexPath.row]];
-        [manager deleteNote:note];
+        [manager deleteNote:[self.noteList objectAtIndex:indexPath.row]];
         [self.noteList removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     
@@ -316,12 +333,14 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NoteManager *manager = [NoteManager sharedManager];
-    NSLog(@"%lu",indexPath.row);
+   // NoteManager *manager = [NoteManager sharedManager];
     // 有一个错误 show 有作用，present无作用
-    Note *note = [manager getNoteFromBmobObject:[self.noteList objectAtIndex:indexPath.row]];
+    //Note *note = [manager getNoteFromBmobObject:[self.noteList objectAtIndex:indexPath.row]];
+    
+    
     ComposeViewController *compose = [[ComposeViewController alloc]init];
-    [compose showCurrentNote:note];
+    compose.delegate = self;
+    [compose showCurrentNote:[self.noteList objectAtIndex:indexPath.row]];
    // [self presentViewController:navigationController animated:YES completion:nil];
     [self showViewController:compose sender:nil];
 }
