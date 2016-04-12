@@ -179,16 +179,32 @@ static NSInteger counter = 0;
 // save
 - (void)saveNote {
     
-    
+
     
     [self.noteContent resignFirstResponder];
     [self.noteTitle resignFirstResponder];
     
     NSString *content = self.noteContent.text;
     NSString *title = self.noteTitle.text;
-
+    
     NoteManager *manager = [NoteManager sharedManager];
     Note *note = [Note new];
+    
+    if ([content isEqualToString:@""] || [title isEqualToString:@""] ) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示信息" message:@"您为输入标题和内容" preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [alert dismissViewControllerAnimated:YES completion:^{
+            }];
+        }];
+        [alert addAction:action];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
+
+    
+    
+
     
     note.noteContent = content;
     note.noteTitle = title;
@@ -208,7 +224,6 @@ static NSInteger counter = 0;
     
     if ([_delegate respondsToSelector:@selector(finishComposeNote)]) {
         [_delegate finishComposeNote];
-        NSLog(@"afsgdhjhgfdfdghdjjhgf");
     }
     
     [self dismissViewControllerAnimated:YES completion:^{

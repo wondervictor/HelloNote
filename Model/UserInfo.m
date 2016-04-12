@@ -8,7 +8,7 @@
 
 #import "UserInfo.h"
 #import <BmobSDK/Bmob.h>
-
+#import "User.h"
 
 @implementation UserInfo
 
@@ -21,6 +21,14 @@
     return sharedManager;
 }
 
+
+- (CoreDataManager *)coreDataManager {
+    if (_coreDataManager == nil) {
+        _coreDataManager = [CoreDataManager new];
+        [_coreDataManager setCoreData];
+    }
+    return _coreDataManager;
+}
 
 - (void)setInfoWithName:(NSString *)name password:(NSString *)pwd {
     self.userPwd = pwd;
@@ -87,6 +95,46 @@
 
 
 - (void)addNewBookWithName:(NSString *)bookName {
+    
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    NSArray *array = [[self coreDataManager].context executeFetchRequest:request error:nil];
+    User *user = [array lastObject];
+    NSArray *bookarray =  [NSKeyedUnarchiver unarchiveObjectWithData:user.books];
+    
+    NSMutableArray *books = [NSMutableArray new];
+    [books addObjectsFromArray:bookarray];
+    [books addObject:bookName];
+    
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:books];
+    user.books = data;
+    
+
+    [[self coreDataManager]saveContext];
+}
+
+
+- (void)updateUsers:(UserInfo *)user {
+    NSString *userName = user.userName;
+    NSString *userPwd = user.userPwd;
+    NSArray *books = user.bookList;
+    NSString *className = [user getClassName];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    NSArray *array = [[self coreDataManager].context executeFetchRequest:request error:nil];
+    for (User *item in array) {
+        [[self coreDataManager].context deleteObject:item];
+    }
+    User *newUser = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:[self coreDataManager].context];
+    newUser.username = userName;
+    newUser.password = userPwd;
+    newUser.books = [NSKeyedArchiver archivedDataWithRootObject:books];
+    newUser.classname = className;
+    [[self coreDataManager]saveContext];
+    
+}
+
+
+/*
+- (void)addNewBookWithName:(NSString *)bookName {
     BmobQuery *query = [[BmobQuery alloc]initWithClassName:@"USER"];
     [query whereKey:@"username" equalTo:self.userName];
     [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
@@ -100,6 +148,7 @@
     
     }];
 }
+ */
 
 - (NSString *)getClassName{
     NSLog(@"%@",self.userName);

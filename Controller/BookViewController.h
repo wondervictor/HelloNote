@@ -8,9 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol BookControllerDelegate <NSObject>
+
+- (void)finishedAddNewBook;
+
+@end
+
+
 @interface BookViewController : UIViewController
 
 @property (nonatomic, strong) UITableView *tableView;
+
+@property (nonatomic, weak) id<BookControllerDelegate> delegate;
 
 @property (nonatomic, strong) NSMutableArray *bookList;
 

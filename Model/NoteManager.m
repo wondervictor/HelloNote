@@ -29,22 +29,6 @@
 }
 
 
-/*
-- (void)setClassName:(NSString *)name {
-    className = name;
-}
-
-+ (NoteManager *)sharedManager {
-    static NoteManager *sharedManager = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedManager = [[self alloc]init];
-    });
-    return sharedManager;
-}
- 
- */
-
 - (CoreDataManager *)coreDataManager {
     if (_coreDataManager == nil) {
         _coreDataManager = [CoreDataManager new];
@@ -69,16 +53,12 @@
 
 
 - (void)modifyNote:(Note *)note {
-    NSLog(@"modify-manager");
-
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"NoteBook"];
     NSArray *fetchObject = [[self coreDataManager].context executeFetchRequest:request error:nil];
     for (NoteBook *item in fetchObject) {
-        NSLog(@"modify- array");
 
         if ([item.title isEqualToString:note.noteTitle] ) {
             [[self coreDataManager].context deleteObject:item];
-            NSLog(@"modify- same");
 
             [self createNewNote:note];
             break;
@@ -90,17 +70,16 @@
 - (void)getAllNote {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"NoteBook"];
     NSArray *array = [[self coreDataManager].context executeFetchRequest:request error:nil];
-#warning Do not run this because the data type will conflict
     [_delegate getAllNotes:array];
-#warning here
 }
 
-- (void)deleteNote:(Note *)note {
+- (void)deleteNote:(NoteBook *)note {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"NoteBook"];
     NSArray *fetchObjects = [[self coreDataManager].context executeFetchRequest:request error:nil];
     for (NoteBook *item in fetchObjects) {
-        if ([note.noteDate isEqual:item.date]) {
+        if ([note.title isEqual:item.title] && [note.content isEqual:item.content]) {
             [[self coreDataManager].context deleteObject:item];
+            break;
         }
     }
     [[self coreDataManager]saveContext];
@@ -115,9 +94,8 @@
     if ([bookList count] == 0) {
         bookList = @[@"默认笔记本"];
     }
-#warning Do not run this because the data type will conflict
+    
     [_delegate getNoteBookList:bookList];
-#warning here
 }
 
 - (NSArray *) getNoteOfBook:(NSString *)bookName {
@@ -126,8 +104,6 @@
     [request setPredicate:predicate];
     NSArray *fetchObjects = [[self coreDataManager].context executeFetchRequest:request error:nil];
     return fetchObjects;
-    
-#warning handle this
     
 }
 
@@ -151,155 +127,213 @@
         return NO;
     }
     
-    
 }
 
 
-
-
-
-
-
-/*
-
-
-
-
-- (void)createNewNote:(Note *)note {
-    BmobObject *noteObject = [[BmobObject alloc]initWithClassName:className];
-    [noteObject setObject:note.noteTitle forKey:@"title"];
-    [noteObject setObject:note.noteContent forKey:@"content"];
-    [noteObject setObject:note.noteDate forKey:@"date"];
-    [noteObject setObject:note.bookName forKey:@"notebook"];
-    
-    UserInfo *userInfo = [UserInfo sharedManager];
-    [userInfo addNewBookWithName:note.bookName];
-    [self getBookList];
-    
-    [noteObject saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
-        NSLog(@"success");
-    }];
-    
+- (BmobObject *)convertNoteToBmobObject:(NoteBook *)note {
+    BmobObject *obj = [BmobObject objectWithClassName:className];
+    [obj setObject:note.content forKey:@"content"];
+    [obj setObject:note.title forKey:@"title"];
+    [obj setObject:note.bookname forKey:@"notebook"];
+    [obj setObject:note.date forKey:@"date"];
+    return obj;
 }
-
-- (void)modifyNote:(Note *)note {
-    BmobQuery *query = [[BmobQuery alloc]initWithClassName:className];
-    [query whereKey:@"title" equalTo:note.noteTitle];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-        BmobObject *object = [array lastObject];
-        [object deleteInBackground];
-    }];
-    
-    [self createNewNote:note];
-    
-}
-
-- (void)getAllNote {
-
-    BmobQuery *query = [[BmobQuery alloc]initWithClassName:className];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-        // error
-        [_delegate getAllNotes:array];
-    }];
-    
-}
-
-- (void)deleteNote:(Note *)note {
-    NSString *title = note.noteTitle;
-    NSString *content = note.noteContent;
-    BmobQuery *query = [[BmobQuery alloc]initWithClassName:className];
-    [query whereKey:@"title" equalTo:title];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-        // error
-        for (BmobObject *object in array) {
-            if ([[object objectForKey:@"title"]isEqualToString:title] && [[object objectForKey:@"content"]isEqualToString:content]) {
-                [object deleteInBackground];
-            }
-        }
-    }];
-    
-}
-
-
-- (void)getBookList {
-    BmobQuery *query = [[BmobQuery alloc]initWithClassName:@"USER"];
-    [query whereKey:@"username" equalTo:[self.userInfo getUserName]];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-        BmobObject *object = [array lastObject];
-         NSArray *bookList = [object objectForKey:@"booklist"];
-        [_delegate getNoteBookList:bookList];
-    }];
-}
-
-- (void)getNoteOfBook:(NSString *)bookName {
-    BmobQuery *query = [[BmobQuery alloc]initWithClassName:className];
-    [query whereKey:@"notebook" equalTo:bookName];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-        if (!error) {
-            [_delegate getNoteOfABook:array];
-        }
-    }];
-}
-
-
-- (void)getCurrentUserInfo:(UserInfo *)user {
-    self.userInfo = user;
-    className = [self.userInfo getClassName];//self.userInfo.className;
-}
-
-
-- (Note *)getNoteFromBmobObject:(BmobObject *)object {
-    Note *note = [Note new];
-    note.noteTitle = [object objectForKey:@"title"];
-    note.noteContent = [object objectForKey:@"content"];
-    note.noteDate = [object objectForKey:@"date"];
-    note.bookName = [object objectForKey:@"notebook"];
-    
-    
-    return note;
-}
-
-- (NSArray *)getTitlesFromNoteArray:(NSArray *)array {
-    NSMutableArray *tempArray  = [NSMutableArray new];
-    for (BmobObject *item in array) {
-        NSString *title = [item objectForKey:@"title"];
-        [tempArray addObject:title];
-    }
-    NSArray *titles = [[NSArray alloc]initWithArray:tempArray];
-    return titles;
-}
-
-
-// 这里使用冒泡法真的好么
-
-- (NSArray *)returnBackWithArray:(NSArray *)array baseArray:(NSArray *)baseArray{
-    NSMutableArray *tempArray = [NSMutableArray new];
-    for (BmobObject *item in baseArray) {
-        for (NSString *title in array) {
-            if ([title isEqualToString:[item objectForKey:@"title"]]) {
-                [tempArray addObject:item];
-            }
-        }
-    }
-    NSArray *returnArray = [[NSArray alloc]initWithArray:tempArray];
-    
-    return returnArray;
-
-}
- 
- */
 
 
 - (void)syncNoteToRemote {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        BmobQuery *query = [[BmobQuery alloc]initWithClassName:className];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+            if (error) {
+                [_delegate syncWithError:@"同步失败"];
+            }
+            else {
+                [self getRemoteNoteList:array];
+            }
+        }];
+        UserInfo *userinfo = [UserInfo sharedManager];
+        BmobQuery *bookQuery = [[BmobQuery alloc]initWithClassName:@"USER"];
+        [query whereKey:@"username" equalTo:userinfo.userName];
+        [bookQuery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+            [self getRemoteNoteList:array];
+        }];
         
     });
-}
-
-- (void)syncNoteToHome {
+    
     
 }
 
+
+
+- (void)syncNoteToHome {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        BmobQuery *query = [[BmobQuery alloc]initWithClassName:className];
+        [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+            if (error) {
+                [_delegate syncWithError:@"同步失败"];
+            }
+            else {
+                [self setRemoteNoteList:array];
+            }
+        }];
+        
+        UserInfo *userinfo = [UserInfo sharedManager];
+        BmobQuery *bookQuery = [[BmobQuery alloc]initWithClassName:@"USER"];
+        [query whereKey:@"username" equalTo:userinfo.userName];
+        [bookQuery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+            [self setRemoteNoteList:array];
+        }];
+        
+    });
+    
+    
+}
+// tong bu dao yun
+- (void)setRemoteNoteList:(NSArray *)list {
+    
+    NSFetchRequest *request  = [NSFetchRequest fetchRequestWithEntityName:@"NoteBook"];
+    NSArray *localNotes = [[self coreDataManager].context executeFetchRequest:request error:nil];
+    NSMutableArray *syncedArray = [[NSMutableArray alloc]init];
+    for (NoteBook *note in localNotes) {
+        [syncedArray addObject:[self convertNoteToBmobObject:note]];
+    }
+    NSInteger number = 0;
+    
+    for (BmobObject *item in syncedArray) {
+        int counter = 0;
+        for (BmobObject *note in list) {
+            if ([[note objectForKey:@"title"]isEqual:[item objectForKey:@"title"]] &&[[item objectForKey:@"content"]isEqual:[note objectForKey:@"content"]] ) {
+                counter = 1;
+                break;
+            }
+            
+        }
+        if (counter == 0) {
+            number ++;
+            [item saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
+                if (error) {
+                    [_delegate syncWithError:@"同步失败"];
+                    
+                }
+            }];
+        }
+    }
+    
+    if (number + [list count] > [syncedArray count]) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            BmobQuery *query = [[BmobQuery alloc]initWithClassName:className];
+            [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
+                [self deleteNoteAtRemoteWithArray:array localList:syncedArray];
+            }];
+
+        });
+    }
+    
+    [_delegate syncWithError:nil];
+    
+}
+
+- (void)deleteNoteAtRemoteWithArray:(NSArray *)remoteList localList:(NSArray *)localList {
+    for (BmobObject *obejct in remoteList ) {
+        int counter = 0;
+        for (BmobObject *note in localList) {
+            if ([[note objectForKey:@"title"]isEqual:[obejct objectForKey:@"title"]] &&[[obejct objectForKey:@"content"]isEqual:[note objectForKey:@"content"]]) {
+                counter = 0;
+                break;
+            }
+            else {
+                counter = 1;
+            }
+        }
+        
+        if (counter == 1) {
+            [obejct deleteInBackground];
+        }
+    }
+    
+}
+
+
+- (void)getRemoteNoteList:(NSArray *)list {
+    NSFetchRequest *request  = [NSFetchRequest fetchRequestWithEntityName:@"NoteBook"];
+    NSArray *localNotes = [[self coreDataManager].context executeFetchRequest:request error:nil];
+    NSMutableArray *syncedArray = [[NSMutableArray alloc]init];
+    for (NoteBook *note in localNotes) {
+        [syncedArray addObject:[self convertNoteToBmobObject:note]];
+    }
+    
+    if ([list count] == 0) {
+        return;
+    }
+
+    for (BmobObject *item in list) {
+        int counter = 0;
+        for (BmobObject *note in syncedArray) {
+            if ([[note objectForKey:@"title"]isEqual:[item objectForKey:@"title"]] &&[[item objectForKey:@"content"]isEqual:[note objectForKey:@"content"]] ) {
+                counter = 1;
+                break;
+            }
+        }
+        if (counter == 0) {
+            Note *note = [Note new];
+            note.noteDate = [item objectForKey:@"date"];
+            note.noteTitle = [item objectForKey:@"title"];
+            note.noteContent = [item objectForKey:@"content"];
+            note.bookName = [item objectForKey:@"notebook"];
+            [self createNewNote:note];
+        }
+
+    }
+    
+    
+    [_delegate syncWithError:nil];
+}
+
+
+// 处理笔记本
+
+- (void)getBookListFromRemote:(NSArray *)array {
+    BmobObject *object = [array lastObject];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    NSArray *fetchObjecs = [[self coreDataManager].context executeFetchRequest:request error:nil];
+    User *user = [fetchObjecs lastObject];
+    NSArray *bookList = [NSArray  new];
+    bookList = [NSKeyedUnarchiver unarchiveObjectWithData:user.books];
+    NSMutableArray *books = [[NSMutableArray alloc]initWithArray:bookList];
+    [books removeAllObjects];
+    [books addObjectsFromArray:[object objectForKey:@"booklist"]];
+    
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:books];
+    user.books = data;
+    [[self coreDataManager]saveContext];
+    
+}
+
+- (void)setBookListToRemote:(NSArray *)array {
+    
+    BmobObject *object = [array lastObject];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    NSArray *fetchObjecs = [[self coreDataManager].context executeFetchRequest:request error:nil];
+    User *user = [fetchObjecs lastObject];
+    NSArray *bookList = [NSArray  new];
+    bookList = [NSKeyedUnarchiver unarchiveObjectWithData:user.books];
+    
+    [object setObject:bookList forKey:@"booklist"];
+    [object updateInBackground];
+    
+}
+
+- (NSArray *)getTitlesFromNoteArray:(NSArray *)array {
+    return  nil;
+}
+/* */
+- (NSArray *)returnBackWithArray:(NSArray *)array baseArray:(NSArray *)baseArray {
+    return nil;
+}
+
+- (Note *)getNoteFromBmobObject:(BmobObject *)object {
+    return nil;
+}
 
 
 

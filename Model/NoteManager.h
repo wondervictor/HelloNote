@@ -26,6 +26,8 @@ typedef void (^CompletionHandler) (BOOL finished,NSString *error);
 - (void)finishSyncingNoteWithCompletitonHandler:(CompletionHandler)block;
 
 
+- (void)syncWithError:(NSString *)error;
+
 
 @end
 

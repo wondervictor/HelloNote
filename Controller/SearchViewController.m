@@ -123,12 +123,12 @@ static NSString *const cellIdentifier = @"NoteCell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NoteManager *manager = [NoteManager sharedManager];
-    NSLog(@"%lu",indexPath.row);
+   // NoteManager *manager = [NoteManager sharedManager];
+    //NSLog(@"%lu",indexPath.row);
     // 有一个错误 show 有作用，present无作用
-    Note *note = [manager getNoteFromBmobObject:[self.filterNotes objectAtIndex:indexPath.row]];
+    //Note *note = [manager getNoteFromBmobObject:[self.filterNotes objectAtIndex:indexPath.row]];
     ComposeViewController *compose = [[ComposeViewController alloc]init];
-    [compose showCurrentNote:note];
+    //[compose showCurrentNote:note];
     // [self presentViewController:navigationController animated:YES completion:nil];
     [self showViewController:compose sender:nil];
 }

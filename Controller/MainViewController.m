@@ -31,7 +31,7 @@
 #define DEFAULT_COLOR   [UIColor colorWithRed:50/255.0 green:205/255.0 blue:50/255.0 alpha:0.98]
 
 
-@interface MainViewController ()<ComposeControllerDelegate,CenterButtonDelegate,UserInfoDelegate,NoteManagerDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface MainViewController ()<ComposeControllerDelegate,BookControllerDelegate,CenterButtonDelegate,UserInfoDelegate,NoteManagerDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -83,14 +83,13 @@
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userChanged) name:UserDidChangedNotification
  object:nil];
-   
-    UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshNotes)];
-    self.navigationItem.rightBarButtonItem = refreshButton;
     
-    UIBarButtonItem *syncButton = [[UIBarButtonItem alloc]initWithTitle:@"同步" style:UIBarButtonItemStylePlain target:self action:@selector(syncNote)];
+    UIBarButtonItem *syncRemoteButton = [[UIBarButtonItem alloc]initWithTitle:@"同步到云" style:UIBarButtonItemStylePlain target:self action:@selector(syncNoteToRemoteDB)];
     
-    self.navigationItem.leftBarButtonItem = syncButton;
+    self.navigationItem.leftBarButtonItem = syncRemoteButton;
+    UIBarButtonItem *syncLocalButton = [[UIBarButtonItem alloc]initWithTitle:@"同步到本地" style:UIBarButtonItemStylePlain target:self action:@selector(syncNoteToLocal)];
     
+    self.navigationItem.rightBarButtonItem = syncLocalButton;
     
     
     UIRefreshControl *rc = [[UIRefreshControl alloc]init];
@@ -114,6 +113,12 @@
 
 #pragma mark - ComposeControllerDelegate
 - (void)finishComposeNote {
+    [self refreshNotes];
+}
+
+#pragma mark bookcontroller
+
+- (void)finishedAddNewBook {
     [self refreshNotes];
 }
 
@@ -165,25 +170,28 @@
     
 }
 
-- (void)test {
-    NoteManager *manager = [NoteManager sharedManager];
-    Note *note = [Note new];
-    note.noteDate = @"2016-04-07";
-    note.noteTitle = @"TEST2";
-    note.noteContent = @"测试notebook";
-    note.bookName = @"haha";
-    
-    //[manager createNewNote:note];
-    
-    
-}
 
 #pragma mark - 同步
-
+/*
 - (void)syncNote {
-    
+    NoteManager *manager = [NoteManager sharedManager];
+    manager.delegate = self;
+    [manager syncNoteToHome];
+    [manager syncNoteToRemote];
+}
+*/
+
+- (void)syncNoteToLocal {
+    NoteManager *manager = [NoteManager sharedManager];
+    manager.delegate = self;
+    [manager syncNoteToRemote];
 }
 
+- (void)syncNoteToRemoteDB {
+    NoteManager *manager = [NoteManager sharedManager];
+    manager.delegate = self;
+    [manager syncNoteToHome];
+}
 
 
 - (void)refreshNotes {
@@ -207,11 +215,22 @@
 
     });
 }
- 
+
+
 - (void)getNoteOfaBook:(NSArray *)notes {
     NSLog(@"dafghj");
 }
 
+
+- (void)syncWithError:(NSString *)error {
+    if (error != nil) {
+        NSLog(@"wrong sync");
+    }
+    else {
+        NSLog(@"finish");
+        [self refreshNotes];
+    }
+}
 
 
 #pragma mark - UserInfoDelegate
@@ -237,6 +256,7 @@
     if (_bookViewController == nil) {
         _bookViewController = [BookViewController new];
     }
+    _bookViewController.delegate = self;
     [_bookViewController setBookListWithArray:self.bookList];
     return _bookViewController;
 }
@@ -329,7 +349,6 @@
     [self.tableView reloadData];
     
 }
-
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

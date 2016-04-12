@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "CoreDataManager.h"
+
 @protocol UserInfoDelegate <NSObject>
 
 @optional
@@ -24,6 +26,9 @@
 @property (nonatomic, strong) NSString *className;
 @property (nonatomic, strong) NSArray *bookList;
 
+@property (nonatomic, strong) CoreDataManager *coreDataManager;
+
+
 @property (nonatomic, weak) id<UserInfoDelegate> delegate;
 
 + (UserInfo *)sharedManager;
@@ -35,4 +40,5 @@
 - (NSString *)getUserName;
 - (NSArray *)getBookList;
 - (void)addNewBookWithName:(NSString *)bookName;
+- (void)updateUsers:(UserInfo *)user;
 @end

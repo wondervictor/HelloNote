@@ -148,6 +148,7 @@
             [userDefault setObject:userInfo.userPwd forKey:@"pwd"];
             [userDefault synchronize];
             MainViewController *mainViewController = [[MainViewController alloc]init];
+            [userInfo updateUsers:userInfo];
             NavigationController *nv = [[NavigationController alloc]initWithRootViewController:mainViewController];
             [self showViewController:nv sender:nil];
         } else {
@@ -155,6 +156,7 @@
                 [userDefault setObject:userInfo.userName forKey:@"username"];
                 [userDefault setObject:userInfo.userPwd forKey:@"pwd"];
                 [userDefault synchronize];
+                [userInfo updateUsers:userInfo];
                 [[NSNotificationCenter defaultCenter]postNotificationName:@"UserDidChangedNotification" object:nil];
 
             }];

@@ -68,8 +68,7 @@
         [self.tableView reloadData];
         UserInfo *userInfo = [UserInfo sharedManager];
         [userInfo addNewBookWithName:name.text];
-        
-        
+        [_delegate finishedAddNewBook];
         [alert dismissViewControllerAnimated:YES completion:nil];
         
     }];
