@@ -70,6 +70,7 @@ static NSString *className;
 /*简化cell工作*/
 - (BOOL)setDataForCellWithNote:(NoteBook *)note Handler:(void (^)(NSString *title,NSString *content,NSString *date))block;
 
+- (void)deleteAllNotes;
 
 /*  */
 - (NSArray *)getTitlesFromNoteArray:(NSArray *)array;

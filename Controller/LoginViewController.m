@@ -149,6 +149,7 @@
             [userDefault synchronize];
             MainViewController *mainViewController = [[MainViewController alloc]init];
             [userInfo updateUsers:userInfo];
+            [manager deleteAllNotes];
             NavigationController *nv = [[NavigationController alloc]initWithRootViewController:mainViewController];
             [self showViewController:nv sender:nil];
         } else {

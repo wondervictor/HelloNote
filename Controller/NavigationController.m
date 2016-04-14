@@ -130,7 +130,7 @@
 
 
 - (void)titleTouched:(id)sender {
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"TitleTouchedNotification" object:nil];
+
 }
 
 - (void)menuView:(Menu *)view touchAtIndex:(NSInteger)index {

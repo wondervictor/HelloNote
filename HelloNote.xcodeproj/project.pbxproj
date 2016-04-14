@@ -29,7 +29,6 @@
 		2E2E6E161CB92BE800FCCEDA /* User+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E2E6E111CB92BE800FCCEDA /* User+CoreDataProperties.m */; };
 		2E2E6E171CB92BE800FCCEDA /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E2E6E131CB92BE800FCCEDA /* User.m */; };
 		2E9606B01CB3D44A00B3AA57 /* NoteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E9606AE1CB3D44A00B3AA57 /* NoteCell.m */; };
-		2E9606B11CB3D44A00B3AA57 /* NoteCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E9606AF1CB3D44A00B3AA57 /* NoteCell.xib */; };
 		2EBCEB301CAF821D00A6B24C /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF671CACFCDE00EFA996 /* MainViewController.m */; };
 		2EBCEB311CAF822B00A6B24C /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF671CACFCDE00EFA996 /* MainViewController.m */; };
 		2EBCEB321CAF85AA00A6B24C /* CenterButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF7F1CAD059400EFA996 /* CenterButton.m */; };
@@ -105,7 +104,6 @@
 		2E2E6E131CB92BE800FCCEDA /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = Model/User.m; sourceTree = "<group>"; };
 		2E9606AD1CB3D44A00B3AA57 /* NoteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NoteCell.h; path = View/NoteCell.h; sourceTree = "<group>"; };
 		2E9606AE1CB3D44A00B3AA57 /* NoteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NoteCell.m; path = View/NoteCell.m; sourceTree = "<group>"; };
-		2E9606AF1CB3D44A00B3AA57 /* NoteCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NoteCell.xib; path = View/NoteCell.xib; sourceTree = "<group>"; };
 		2EBCEB341CAF8CCA00A6B24C /* BookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BookViewController.h; path = Controller/BookViewController.h; sourceTree = "<group>"; };
 		2EBCEB351CAF8CCA00A6B24C /* BookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BookViewController.m; path = Controller/BookViewController.m; sourceTree = "<group>"; };
 		2EBCEB371CAF8D9100A6B24C /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingViewController.h; path = Controller/SettingViewController.h; sourceTree = "<group>"; };
@@ -249,7 +247,6 @@
 				2EBCEB601CB395C400A6B24C /* TableMenu.m */,
 				2E9606AD1CB3D44A00B3AA57 /* NoteCell.h */,
 				2E9606AE1CB3D44A00B3AA57 /* NoteCell.m */,
-				2E9606AF1CB3D44A00B3AA57 /* NoteCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -414,7 +411,6 @@
 			files = (
 				2E19EF3D1CACFC4000EFA996 /* LaunchScreen.storyboard in Resources */,
 				2E19EF3A1CACFC4000EFA996 /* Assets.xcassets in Resources */,
-				2E9606B11CB3D44A00B3AA57 /* NoteCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

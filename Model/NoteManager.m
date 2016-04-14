@@ -113,7 +113,13 @@
     className = [self.userInfo getClassName];//self.userInfo.className;
 }
 
-
+- (void)deleteAllNotes {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"NoteBook"];
+    NSArray *fetchObject = [[self coreDataManager].context executeFetchRequest:request error:nil];
+    for (NoteBook *item in fetchObject) {
+        [[self coreDataManager].context deleteObject:item];
+    }
+}
 
 - (BOOL)setDataForCellWithNote:(NoteBook *)note Handler:(void (^)(NSString *, NSString *, NSString *))block {
     NSString *title = note.title;
@@ -133,7 +139,8 @@
 - (BmobObject *)convertNoteToBmobObject:(NoteBook *)note {
     BmobObject *obj = [BmobObject objectWithClassName:className];
     [obj setObject:note.content forKey:@"content"];
-    [obj setObject:note.title forKey:@"title"];
+    NSString * title = [note.title mutableCopy];
+    [obj setObject:title forKey:@"title"];
     [obj setObject:note.bookname forKey:@"notebook"];
     [obj setObject:note.date forKey:@"date"];
     return obj;
@@ -146,6 +153,7 @@
         [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
             if (error) {
                 [_delegate syncWithError:@"同步失败"];
+                return;
             }
             else {
                 [self getRemoteNoteList:array];
@@ -155,7 +163,7 @@
         BmobQuery *bookQuery = [[BmobQuery alloc]initWithClassName:@"USER"];
         [query whereKey:@"username" equalTo:userinfo.userName];
         [bookQuery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-            [self getRemoteNoteList:array];
+            [self getBookListFromRemote:array];
         }];
         
     });
@@ -171,6 +179,7 @@
         [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
             if (error) {
                 [_delegate syncWithError:@"同步失败"];
+                return ;
             }
             else {
                 [self setRemoteNoteList:array];
@@ -181,14 +190,13 @@
         BmobQuery *bookQuery = [[BmobQuery alloc]initWithClassName:@"USER"];
         [query whereKey:@"username" equalTo:userinfo.userName];
         [bookQuery findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-            [self setRemoteNoteList:array];
+            [self setBookListToRemote:array];
         }];
         
     });
     
     
 }
-// tong bu dao yun
 - (void)setRemoteNoteList:(NSArray *)list {
     
     NSFetchRequest *request  = [NSFetchRequest fetchRequestWithEntityName:@"NoteBook"];
@@ -197,11 +205,17 @@
     for (NoteBook *note in localNotes) {
         [syncedArray addObject:[self convertNoteToBmobObject:note]];
     }
+    NSLog(@"--set - sync %lu",[syncedArray count]);
+
     NSInteger number = 0;
+    NSLog(@"--set - list %lu",[list count]);
+    
     
     for (BmobObject *item in syncedArray) {
         int counter = 0;
+        
         for (BmobObject *note in list) {
+            NSLog(@" in list %@",[note objectForKey:@"title"]);
             if ([[note objectForKey:@"title"]isEqual:[item objectForKey:@"title"]] &&[[item objectForKey:@"content"]isEqual:[note objectForKey:@"content"]] ) {
                 counter = 1;
                 break;
@@ -266,14 +280,19 @@
         return;
     }
 
+    NSLog(@"list : %lu",[list count]);
     for (BmobObject *item in list) {
+        
         int counter = 0;
+        
         for (BmobObject *note in syncedArray) {
+            NSLog(@"----%@",[note objectForKey:@"title"]);
             if ([[note objectForKey:@"title"]isEqual:[item objectForKey:@"title"]] &&[[item objectForKey:@"content"]isEqual:[note objectForKey:@"content"]] ) {
                 counter = 1;
                 break;
             }
         }
+        
         if (counter == 0) {
             Note *note = [Note new];
             note.noteDate = [item objectForKey:@"date"];

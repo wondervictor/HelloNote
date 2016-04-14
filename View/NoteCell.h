@@ -10,11 +10,16 @@
 
 @interface NoteCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (strong, nonatomic)  UILabel *titleLabel;
 
-@property (nonatomic, weak) IBOutlet UILabel *contentLabel;
+@property (nonatomic, strong)  UILabel *contentLabel;
 
-@property (nonatomic, weak) IBOutlet UILabel *dateLabel;
+@property (nonatomic, strong)  UILabel *dateLabel;
+
+
+- (void)setCellWithTitle:(NSString *)title content:(NSString *)content date:(NSString *)date;
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier;
 
 
 @end

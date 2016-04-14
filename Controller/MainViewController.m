@@ -69,16 +69,15 @@
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tableView.autoresizesSubviews = YES;
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([NoteCell class]) bundle:nil] forCellReuseIdentifier:@"NoteCell"];
-
     
     [self.view addSubview:self.tableView];
     
     
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(menuViewTouchedAt:) name:@"MenuViewTouchedNotification" object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(menuTitleTouched:) name:@"TitleTouchedNotification" object:nil];
     
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(userChanged) name:UserDidChangedNotification
@@ -291,7 +290,7 @@
 #pragma mark - UITableViewDataSource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 80;
+    return 60;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -303,20 +302,24 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NoteCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"NoteCell" forIndexPath:indexPath];
+    static NSString *const reuseIdentifier = @"NoteCell";
+    NoteCell *cell = [self.tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+    
+    if (cell == nil) {
+        cell = [[NoteCell alloc]initWithStyle:0 reuseIdentifier:reuseIdentifier];
+        
+    }
+
     //Note *note = [self.noteList objectAtIndex:indexPath.row];
     NoteManager *manager = [NoteManager sharedManager];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     BOOL isSuccess = [manager setDataForCellWithNote:[self.noteList objectAtIndex:indexPath.row] Handler:^(NSString *title, NSString *content, NSString *date) {
-        cell.titleLabel.text = title;
-        cell.contentLabel.text = content;
-        cell.dateLabel.text = date;
+        [cell setCellWithTitle:title content:content date:date];
     }];
     if (isSuccess == NO) {
         return nil;
     }
-    
     /*
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.titleLabel.text = note.noteTitle;
@@ -349,6 +352,8 @@
     [self.tableView reloadData];
     
 }
+
+
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

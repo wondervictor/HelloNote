@@ -87,6 +87,7 @@ NSString *const UserDidChangedNotification = @"UserDidChangedNotification";
     LoginViewController *loginViewController = [[LoginViewController alloc]init] ;
     [self presentViewController:loginViewController animated:YES completion:^{
         [userDefault setObject:@"" forKey:@"booklist"];
+        
     }];
 }
 
