@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "UserViewController.h"
+#import "NoteManager.h"
 
 #define  MAIN_WIDTH     (self.view.frame.size.width)
 #define  MAIN_HEIGHT    (self.view.frame.size.height)
@@ -78,12 +79,10 @@ NSString *const UserDidChangedNotification = @"UserDidChangedNotification";
 
 
 
-
-
-
 - (void)logOut {
     NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-
+    NoteManager *manager = [NoteManager sharedManager];
+    [manager deleteAllNotes];
     LoginViewController *loginViewController = [[LoginViewController alloc]init] ;
     [self presentViewController:loginViewController animated:YES completion:^{
         [userDefault setObject:@"" forKey:@"booklist"];
@@ -94,18 +93,5 @@ NSString *const UserDidChangedNotification = @"UserDidChangedNotification";
 
 
 
-
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

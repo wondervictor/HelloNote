@@ -67,23 +67,7 @@ static NSString *const cellIdentifier = @"NoteCell";
         [self.tableView reloadData];
     });
     
-    
-    /*
-    NoteManager *manager = [NoteManager sharedManager];
-    NSArray *noteTitles = [manager getTitlesFromNoteArray:self.searchNotes];
-    
-    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@", self.searchController.searchBar.text];
-    
 
-    NSMutableArray *array = [[noteTitles filteredArrayUsingPredicate:searchPredicate] mutableCopy];
-    [self.filterNotes addObjectsFromArray: [manager returnBackWithArray:array baseArray:self.searchNotes]];
-    NSLog(@"%lu",[self.filterNotes count]);
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView reloadData];
-    });
-
-    
-    */
 }
 
 

@@ -50,17 +50,7 @@
     // Do any additional setup after loading the view.
 }
 
-/*
-- (void)getBookListArray {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [self.bookList addObjectsFromArray:[userDefaults objectForKey:@"booklist"]];
-    if ([self.bookList count] == 0) {
-        [self.bookList addObject:@"默认笔记本"];
-    }
-    
-    
-}
-*/
+
 
 - (void)addNewBook:(UIBarButtonItem *)sender {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"添加笔记本" message:@"请输入要添加的笔记本" preferredStyle:UIAlertControllerStyleAlert];

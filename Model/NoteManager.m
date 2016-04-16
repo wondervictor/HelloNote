@@ -115,10 +115,12 @@
 }
 
 - (void)deleteAllNotes {
+    int i = 0;
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"NoteBook"];
     NSArray *fetchObject = [[self coreDataManager].context executeFetchRequest:request error:nil];
     for (NoteBook *item in fetchObject) {
         [[self coreDataManager].context deleteObject:item];
+        NSLog(@"%d",++i);
     }
 }
 
@@ -177,8 +179,11 @@
 - (void)syncNoteToHome {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         BmobQuery *query = [[BmobQuery alloc]initWithClassName:className];
+        
         [query findObjectsInBackgroundWithBlock:^(NSArray *array, NSError *error) {
-            if (error) {
+            
+            if (error&&error.code != 101) {
+                NSLog(@"%@",error);
                 [_delegate syncWithError:@"同步失败"];
                 return ;
             }
@@ -225,7 +230,9 @@
         }
         if (counter == 0) {
             number ++;
-            [item saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
+            BmobObject *object = [[BmobObject alloc]initWithClassName:className];
+            object = item;
+            [object saveInBackgroundWithResultBlock:^(BOOL isSuccessful, NSError *error) {
                 if (error) {
                     [_delegate syncWithError:@"同步失败"];
                     
@@ -340,6 +347,8 @@
     [object updateInBackground];
     
 }
+
+
 
 - (NSArray *)getTitlesFromNoteArray:(NSArray *)array {
     return  nil;
