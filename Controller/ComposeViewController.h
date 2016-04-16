@@ -11,7 +11,7 @@
 @class NoteBook;
 
 @protocol ComposeControllerDelegate <NSObject>
-
+@optional
 - (void)finishComposeNote;
 
 @end

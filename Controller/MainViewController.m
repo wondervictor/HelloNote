@@ -153,7 +153,7 @@
             case 0:[self showViewController:[self userViewController] sender:nil];break;
             case 1:[self showViewController:[self settingViewController] sender:nil];break;
             case 2: break;
-            case 3:[self showViewController:[self searchViewController] sender:nil];break;
+            case 3:self.searchViewController.searchNotes = self.noteList;[self showViewController:[self searchViewController] sender:nil];break;
             default:
                 break;
         }

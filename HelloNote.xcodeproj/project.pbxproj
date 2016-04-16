@@ -28,6 +28,7 @@
 		2E2E6E151CB92BE800FCCEDA /* NoteBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E2E6E0F1CB92BE800FCCEDA /* NoteBook.m */; };
 		2E2E6E161CB92BE800FCCEDA /* User+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E2E6E111CB92BE800FCCEDA /* User+CoreDataProperties.m */; };
 		2E2E6E171CB92BE800FCCEDA /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E2E6E131CB92BE800FCCEDA /* User.m */; };
+		2E826D9B1CC1FDE900ACC86E /* DetailBookVIewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E826D9A1CC1FDE900ACC86E /* DetailBookVIewController.m */; };
 		2E9606B01CB3D44A00B3AA57 /* NoteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E9606AE1CB3D44A00B3AA57 /* NoteCell.m */; };
 		2EBCEB301CAF821D00A6B24C /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF671CACFCDE00EFA996 /* MainViewController.m */; };
 		2EBCEB311CAF822B00A6B24C /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E19EF671CACFCDE00EFA996 /* MainViewController.m */; };
@@ -102,6 +103,8 @@
 		2E2E6E111CB92BE800FCCEDA /* User+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "User+CoreDataProperties.m"; path = "Model/User+CoreDataProperties.m"; sourceTree = "<group>"; };
 		2E2E6E121CB92BE800FCCEDA /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = User.h; path = Model/User.h; sourceTree = "<group>"; };
 		2E2E6E131CB92BE800FCCEDA /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = User.m; path = Model/User.m; sourceTree = "<group>"; };
+		2E826D991CC1FDE900ACC86E /* DetailBookVIewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DetailBookVIewController.h; path = Controller/DetailBookVIewController.h; sourceTree = "<group>"; };
+		2E826D9A1CC1FDE900ACC86E /* DetailBookVIewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DetailBookVIewController.m; path = Controller/DetailBookVIewController.m; sourceTree = "<group>"; };
 		2E9606AD1CB3D44A00B3AA57 /* NoteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NoteCell.h; path = View/NoteCell.h; sourceTree = "<group>"; };
 		2E9606AE1CB3D44A00B3AA57 /* NoteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NoteCell.m; path = View/NoteCell.m; sourceTree = "<group>"; };
 		2EBCEB341CAF8CCA00A6B24C /* BookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BookViewController.h; path = Controller/BookViewController.h; sourceTree = "<group>"; };
@@ -230,6 +233,8 @@
 				2EBCEB3B1CAF8DA500A6B24C /* UserViewController.m */,
 				2EBCEB3D1CAF8DB100A6B24C /* SearchViewController.h */,
 				2EBCEB3E1CAF8DB100A6B24C /* SearchViewController.m */,
+				2E826D991CC1FDE900ACC86E /* DetailBookVIewController.h */,
+				2E826D9A1CC1FDE900ACC86E /* DetailBookVIewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -489,6 +494,7 @@
 				2E2E6E161CB92BE800FCCEDA /* User+CoreDataProperties.m in Sources */,
 				2E19EF831CAD05AC00EFA996 /* NoteManager.m in Sources */,
 				2EBCEB391CAF8D9100A6B24C /* SettingViewController.m in Sources */,
+				2E826D9B1CC1FDE900ACC86E /* DetailBookVIewController.m in Sources */,
 				2E19EF681CACFCDE00EFA996 /* MainViewController.m in Sources */,
 				2E19EF7A1CACFDC700EFA996 /* LoginViewController.m in Sources */,
 				2E2E6E171CB92BE800FCCEDA /* User.m in Sources */,

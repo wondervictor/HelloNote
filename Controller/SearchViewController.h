@@ -10,6 +10,6 @@
 
 @interface SearchViewController : UIViewController
 
-
+@property (nonatomic, strong) NSArray *searchNotes;
 
 @end

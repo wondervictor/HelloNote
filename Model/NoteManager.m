@@ -100,7 +100,8 @@
 
 - (NSArray *) getNoteOfBook:(NSString *)bookName {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"NoteBook"];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF CONTAINS[c] %@",bookName];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"bookname=%@",bookName];
     [request setPredicate:predicate];
     NSArray *fetchObjects = [[self coreDataManager].context executeFetchRequest:request error:nil];
     return fetchObjects;
@@ -280,13 +281,11 @@
         return;
     }
 
-    NSLog(@"list : %lu",[list count]);
     for (BmobObject *item in list) {
         
         int counter = 0;
         
         for (BmobObject *note in syncedArray) {
-            NSLog(@"----%@",[note objectForKey:@"title"]);
             if ([[note objectForKey:@"title"]isEqual:[item objectForKey:@"title"]] &&[[item objectForKey:@"content"]isEqual:[note objectForKey:@"content"]] ) {
                 counter = 1;
                 break;

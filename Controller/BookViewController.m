@@ -10,7 +10,9 @@
 
 #import "UserInfo.h"
 
+#import "NoteManager.h"
 
+#import "DetailBookVIewController.h"
 
 #define  MAIN_WIDTH     (self.view.frame.size.width)
 #define  MAIN_HEIGHT    (self.view.frame.size.height)
@@ -116,6 +118,16 @@
 
 
 #pragma mark - UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NoteManager *manager = [NoteManager sharedManager];
+    NSArray *array = [manager getNoteOfBook:[self.bookList objectAtIndex:indexPath.row]];
+    DetailBookVIewController *detailController = [[DetailBookVIewController alloc]init];
+    //detailController.noteList = [array mutableCopy];
+    detailController.noteList = array;
+    [self showViewController:detailController sender:nil];
+}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 50;

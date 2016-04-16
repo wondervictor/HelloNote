@@ -21,8 +21,8 @@
 @interface SearchViewController ()<UISearchResultsUpdating,UITableViewDelegate,UITableViewDataSource,NoteManagerDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
+
 @property (nonatomic, strong) UISearchController *searchController;
-@property (nonatomic, strong) NSMutableArray *searchNotes;
 
 @property (nonatomic, strong) NSMutableArray *filterNotes;
 
@@ -36,22 +36,15 @@ static NSString *const cellIdentifier = @"NoteCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NoteManager *manager = [NoteManager sharedManager];
-    manager.delegate = self;
-    [manager getAllNote];
-    
-    
     self.view.backgroundColor = DEFAULT_COLOR;
     self.title = @"搜索";
     self.filterNotes = [NSMutableArray new];
-    self.searchNotes = [NSMutableArray new];
     
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, MAIN_WIDTH, MAIN_HEIGHT) style:UITableViewStylePlain];
     [self.view addSubview:self.tableView];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([NoteCell class]) bundle:nil] forCellReuseIdentifier:cellIdentifier];
     
     self.searchController = [[UISearchController alloc]initWithSearchResultsController:nil];
     self.searchController.searchResultsUpdater = self;
@@ -67,7 +60,15 @@ static NSString *const cellIdentifier = @"NoteCell";
 #pragma mark - UISearchResultsUpdating
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     [self.filterNotes removeAllObjects];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title=%@",self.searchController.searchBar.text];
+    NSArray *notes = [self.searchNotes filteredArrayUsingPredicate:predicate];
+    [self.filterNotes addObjectsFromArray:notes];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
     
+    
+    /*
     NoteManager *manager = [NoteManager sharedManager];
     NSArray *noteTitles = [manager getTitlesFromNoteArray:self.searchNotes];
     
@@ -82,15 +83,9 @@ static NSString *const cellIdentifier = @"NoteCell";
     });
 
     
-    
+    */
 }
 
-
-- (void)getAllNotes:(NSArray *)notes {
-    [self.searchNotes removeAllObjects];
-    [self.searchNotes addObjectsFromArray:notes];
-    
-}
 
 #pragma mark - UITableViewDelegate && UITableViewDataSource
 
@@ -108,28 +103,25 @@ static NSString *const cellIdentifier = @"NoteCell";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NoteCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    NoteManager *manager = [NoteManager sharedManager];
-    if (self.searchController.active == YES) {
-        Note *note = [manager getNoteFromBmobObject:[self.filterNotes objectAtIndex:indexPath.row]];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.titleLabel.text = note.noteTitle;
-        cell.contentLabel.text = note.noteContent;
-        cell.dateLabel.text = note.noteDate;
+    NoteCell *cell = [self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (cell == nil) {
+        cell = [[NoteCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-
+    
+    NoteManager *manager = [NoteManager sharedManager];
+   [manager setDataForCellWithNote:[self.filterNotes objectAtIndex:indexPath.row] Handler:^(NSString *title, NSString *content, NSString *date) {
+       cell.titleLabel.text = title;
+       cell.contentLabel.text = content;
+       cell.dateLabel.text = date;
+   }];
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-   // NoteManager *manager = [NoteManager sharedManager];
-    //NSLog(@"%lu",indexPath.row);
-    // 有一个错误 show 有作用，present无作用
-    //Note *note = [manager getNoteFromBmobObject:[self.filterNotes objectAtIndex:indexPath.row]];
+
     ComposeViewController *compose = [[ComposeViewController alloc]init];
-    //[compose showCurrentNote:note];
-    // [self presentViewController:navigationController animated:YES completion:nil];
+    [compose showCurrentNote:[self.filterNotes objectAtIndex:indexPath.row]];
     [self showViewController:compose sender:nil];
 }
 
